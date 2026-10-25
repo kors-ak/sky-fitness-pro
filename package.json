@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "next": "16.4.3",
+    "prettier": "^3.9.10",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
