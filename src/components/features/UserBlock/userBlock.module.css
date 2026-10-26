@@ -1,0 +1,30 @@
+.user {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.user__info {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 110%;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 4px;
+    right: -12px;
+    transform: translate(50%, 50%);
+    box-sizing: border-box;
+
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    rotate: 45deg;
+  }
+}

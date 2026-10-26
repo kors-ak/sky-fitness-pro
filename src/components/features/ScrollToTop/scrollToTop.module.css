@@ -1,0 +1,43 @@
+.button {
+  position: fixed;
+  bottom: 81px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  padding: 16px 26px;
+  border-radius: 46px;
+  background-color: rgb(188, 236, 48);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.1s ease-in,
+    visibility 0.1s ease-out,
+    background-color 0.1s ease;
+
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 110%;
+
+  &[data-visible='true'] {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  &:hover {
+    background-color: rgb(198, 255, 0);
+  }
+
+  &:active {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+  }
+
+  @media (max-width: 768px) {
+    right: 16px;
+    bottom: 29px;
+    transform: none;
+  }
+}

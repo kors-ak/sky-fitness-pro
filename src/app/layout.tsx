@@ -1,10 +1,11 @@
+import Header from '@/components/features/Header/Header'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import './globals.css'
 
 const roboto = Roboto({
   subsets: ['latin', 'cyrillic'],
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '600'],
   variable: '--font-roboto',
   display: 'swap',
 })
@@ -17,7 +18,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="ru" className={roboto.variable}>
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   )
 }
