@@ -18,7 +18,13 @@ export const handleAuthError = (
   }
 
   if (error instanceof Error) {
-    callback(error.message || 'Не удалось войти. Попробуйте позже')
+    callback(
+      error.message === 'Пользователь с таким email уже существует'
+        ? 'Данная почта уже используется.\nПопробуйте войти.'
+        : error.message === 'Неверный пароль'
+          ? 'Пароль введен неверно,\nпопробуйте еще раз.'
+          : error.message || 'Не удалось войти. Попробуйте позже'
+    )
     return
   }
 

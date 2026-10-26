@@ -58,7 +58,11 @@ export default function SignUpPage() {
           Логин
         </label>
         <input
-          className={styles.input}
+          className={cn(styles.input, {
+            [styles.inputError]: Boolean(
+              errors.password || apiError.includes('email')
+            ),
+          })}
           type="email"
           name="email"
           id="email"
@@ -74,7 +78,11 @@ export default function SignUpPage() {
           Пароль
         </label>
         <input
-          className={styles.input}
+          className={cn(styles.input, {
+            [styles.inputError]: Boolean(
+              errors.password || apiError.includes('Пароль')
+            ),
+          })}
           type="password"
           name="password"
           id="password"
@@ -94,6 +102,7 @@ export default function SignUpPage() {
           className={cn(styles.btn, styles.mainBtn, {
             [styles.loading]: isLoading,
           })}
+          disabled={isLoading}
         >
           Войти
         </button>

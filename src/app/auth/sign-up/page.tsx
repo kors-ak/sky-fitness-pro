@@ -60,7 +60,11 @@ export default function SignUpPage() {
           Эл. почта
         </label>
         <input
-          className={styles.input}
+          className={cn(styles.input, {
+            [styles.inputError]: Boolean(
+              errors.password || apiError.includes('почта')
+            ),
+          })}
           type="email"
           name="email"
           id="email"
@@ -113,6 +117,7 @@ export default function SignUpPage() {
           className={cn(styles.btn, styles.mainBtn, {
             [styles.loading]: isLoading,
           })}
+          disabled={isLoading}
         >
           Зарегистрироваться
         </button>
