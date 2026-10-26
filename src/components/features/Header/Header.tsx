@@ -11,7 +11,7 @@ export default function Header() {
       <div className={styles.header__content}>
         <Link href="/" aria-label="SkyFitnessPro — главная">
           <Image
-            src="logo.svg"
+            src="/logo.svg"
             alt="SkyFitnessPro"
             width={220}
             height={35}
