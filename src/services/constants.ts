@@ -1,11 +1,23 @@
 export const BASE_URL = 'https://wedev-api.sky.pro/api/fitness'
 
-export const REFRESH_TIMEOUT = 1000 * 60 * 60
-
-export const request = async <T>(url: string, data: unknown): Promise<T> => {
+export const request = async <T>(
+  method: 'GET' | 'POST' | 'DELETE' | 'PATCH' = 'GET',
+  url: string,
+  data?: unknown,
+  token?: string,
+  revalidate?: number
+): Promise<T> => {
   const response = await fetch(`${BASE_URL}${url}`, {
-    method: 'POST',
-    body: JSON.stringify(data),
+    method,
+    headers: {
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+    ...(data !== undefined && {
+      body: JSON.stringify(data),
+    }),
+    ...(revalidate !== undefined && {
+      next: { revalidate },
+    }),
   })
 
   const result = await response.json()

@@ -1,3 +1,4 @@
+import { resetCourseSlice } from '@/store/features/coursesSlice'
 import { clearUserData } from '@/store/features/userSlice'
 import { useAppDispatch } from '@/store/hooks'
 import cn from 'classnames'
@@ -51,6 +52,7 @@ export default function ExitModal({ changeIsOpen }: PropsType) {
               event.stopPropagation()
               changeIsOpen(false)
               dispatch(clearUserData())
+              dispatch(resetCourseSlice())
               router.replace('/auth/sign-in')
             }}
           >

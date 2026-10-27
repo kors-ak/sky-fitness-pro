@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { coursesSliceReducer } from './features/coursesSlice'
 import { userSliceReducer } from './features/userSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: combineReducers({
       user: userSliceReducer,
+      courses: coursesSliceReducer,
     }),
   })
 }
