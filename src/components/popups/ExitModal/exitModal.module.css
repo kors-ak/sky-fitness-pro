@@ -1,0 +1,68 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  padding: 40px 48px;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 110%;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  gap: 24px;
+}
+
+.btn {
+  display: block;
+  padding: 16px 0;
+  width: 240px;
+  border-radius: 46px;
+
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 110%;
+}
+
+.stay {
+  background-color: rgb(188, 236, 48);
+
+  &:hover {
+    background-color: rgb(198, 255, 0);
+  }
+
+  &:active {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+  }
+}
+
+.logout {
+  border: 1px solid rgb(0, 0, 0);
+
+  &:hover {
+    background-color: rgb(247, 247, 247);
+  }
+
+  &:active {
+    background-color: rgb(233, 236, 237);
+  }
+}
