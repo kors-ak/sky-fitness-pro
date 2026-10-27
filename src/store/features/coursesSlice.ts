@@ -11,7 +11,7 @@ type initialStateType = {
 }
 
 const initialState: initialStateType = {
-  fetchIsLoading: true,
+  fetchIsLoading: false,
   fetchError: '',
   fetchIsUserCoursesLoading: false,
   fetchUserCoursesError: '',
