@@ -1,3 +1,4 @@
+import { useCourses } from '@/hooks/useCourses'
 import { CourseType } from '@/sharedTypes/CourseType'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
@@ -9,7 +10,9 @@ type CourseCardProps = {
 }
 
 export default function CourseCard({ course }: CourseCardProps) {
+  const isLoading = useAppSelector((store) => store.courses.moveCourseIsLoading)
   const userCourses = useAppSelector((store) => store.courses.userCourses)
+
   const isAdded = userCourses.find((el) => el._id === course._id)
   const dailyDuration = `${course.dailyDurationInMinutes.from}-${course.dailyDurationInMinutes.to}`
   const difficultyLevel =
@@ -18,6 +21,8 @@ export default function CourseCard({ course }: CourseCardProps) {
       : course.difficulty === 'средний'
         ? 'medium'
         : 'hard'
+
+  const { addCourse, removeCourse } = useCourses()
 
   return (
     <article className={styles.card}>
@@ -32,6 +37,10 @@ export default function CourseCard({ course }: CourseCardProps) {
           src={`/images/${course.nameEN.toLowerCase()}-card.jpg`}
           alt={course.nameRU}
           fill
+          sizes="(max-width: 375px) 343px, 360px"
+          loading={
+            [1, 2, 3].find((el) => el === course.order) ? 'eager' : 'lazy'
+          }
         />
       </div>
 
@@ -70,25 +79,22 @@ export default function CourseCard({ course }: CourseCardProps) {
         </div>
       </div>
 
-      {isAdded ? (
-        <button title="Удалить курс" className={styles.circleBtn}>
-          <Image
-            src="/icons/circle-remove.svg"
-            alt="Удалить курс"
-            width={32}
-            height={32}
-          />
-        </button>
-      ) : (
-        <button title="Добавить курс" className={styles.circleBtn}>
-          <Image
-            src="/icons/circle-add.svg"
-            alt="Добавить курс"
-            width={32}
-            height={32}
-          />
-        </button>
-      )}
+      <button
+        type="button"
+        title={isAdded ? 'Удалить курс' : 'Добавить курс'}
+        className={styles.circleBtn}
+        disabled={isLoading}
+        onClick={() =>
+          isAdded ? removeCourse(course._id) : addCourse(course._id)
+        }
+      >
+        <Image
+          src={isAdded ? '/icons/circle-remove.svg' : '/icons/circle-add.svg'}
+          alt={isAdded ? 'Удалить курс' : 'Добавить курс'}
+          width={32}
+          height={32}
+        />
+      </button>
     </article>
   )
 }

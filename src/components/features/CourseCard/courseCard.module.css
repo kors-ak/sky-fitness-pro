@@ -10,7 +10,11 @@
   transition: all 0.2s ease-out;
 
   &:active {
-    transform: scale(1.02);
+    transform: scale(1.01);
+  }
+
+  &:has(.circleBtn:active) {
+    transform: none;
   }
 }
 
@@ -88,4 +92,9 @@
   right: 20px;
   transform: translate(50% 50%);
   z-index: 5;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: progress;
+  }
 }

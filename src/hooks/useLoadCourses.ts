@@ -43,7 +43,10 @@ export function useLoadCourses() {
       })
       .catch((error) => {
         const errorText = handleFetchError(error, dispatch, router)
-        dispatch(setUserCoursesError(errorText))
+        if (errorText) {
+          alert(errorText)
+          dispatch(setUserCoursesError(errorText))
+        }
       })
       .finally(() => {
         dispatch(setUserCoursesIsLoading(false))

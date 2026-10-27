@@ -50,7 +50,7 @@ export const handleFetchError = (
     dispatch(resetCourseSlice())
     router.replace('/auth/sign-in')
 
-    return error.message
+    return ''
   }
 
   if (error instanceof TypeError) {
