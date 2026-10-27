@@ -1,3 +1,4 @@
+import AuthBackground from '@/components/features/AuthBackground/AuthBackground'
 import Header from '@/components/features/Header/Header'
 import CoursesInitializer from '@/components/initialization/CoursesInitializer'
 import UserInitializer from '@/components/initialization/UserInitializer'
@@ -27,6 +28,8 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
           <CoursesInitializer />
 
           <Header />
+
+          <AuthBackground />
           {children}
         </body>
       </html>
