@@ -1,11 +1,15 @@
+'use client'
+
+import CourseContainer from '@/components/features/CourseContainer/CourseContainer'
 import ScrollToTop from '@/components/features/ScrollToTop/ScrollToTop'
-import CoursesInitializer from '@/components/initialization/CoursesInitializer'
+import { useAppSelector } from '@/store/hooks'
 import styles from './page.module.css'
 
 export default function Home() {
+  const courses = useAppSelector((store) => store.courses.allCourses)
+
   return (
     <>
-      <CoursesInitializer />
       <main className={styles.main}>
         <div className={styles.wrapper}>
           <h1 className={styles.heading}>
@@ -14,8 +18,10 @@ export default function Home() {
           <div className={styles.subtitle}>Измени своё тело за полгода!</div>
         </div>
 
-        <ScrollToTop />
+        {courses.length > 0 && <CourseContainer courses={courses} />}
       </main>
+
+      <ScrollToTop />
     </>
   )
 }
