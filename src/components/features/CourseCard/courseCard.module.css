@@ -8,6 +8,7 @@
   cursor: pointer;
   position: relative;
   transition: all 0.2s ease-out;
+  background-color: rgb(255, 255, 255);
 
   &:active {
     transform: scale(1.01);

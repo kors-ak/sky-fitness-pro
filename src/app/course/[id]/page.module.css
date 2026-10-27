@@ -1,0 +1,124 @@
+.main_container {
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+  margin-bottom: 50px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  border-radius: 30px;
+  height: 310px;
+  overflow: hidden;
+}
+
+.yoga {
+  background-color: rgb(255, 199, 0);
+}
+
+.stretching {
+  background-color: rgb(36, 145, 210);
+}
+
+.fitness {
+  background-color: rgb(247, 160, 18);
+}
+
+.stepairobic {
+  background-color: rgb(255, 126, 101);
+}
+
+.bodyflex {
+  background-color: rgb(125, 69, 140);
+}
+
+.title {
+  margin: 40px 0 0 40px;
+  font-weight: 500;
+  font-size: 60px;
+  line-height: 110%;
+  color: rgb(255, 255, 255);
+  z-index: 1;
+}
+
+.image {
+  object-fit: contain;
+  object-position: right center;
+}
+
+.subtitle {
+  margin-bottom: 40px;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 110%;
+}
+
+.fitting {
+  display: flex;
+  gap: 17px;
+  flex-wrap: nowrap;
+
+  div {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: calc(100% / 2);
+    padding: 20px;
+    border-radius: 28px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 24px;
+
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 110%;
+    color: rgb(255, 255, 255);
+    background: linear-gradient(115.81deg, #151720 34.98%, #1e212e 91.5%);
+
+    span {
+      flex-shrink: 0;
+      font-weight: 500;
+      font-size: 75px;
+      line-height: 135%;
+      letter-spacing: 0px;
+      color: rgb(188, 236, 48);
+    }
+  }
+}
+
+.control {
+  div:last-child {
+    min-width: calc(100% / 3 - 48px);
+  }
+}
+
+.directions {
+  width: 100%;
+  padding: 30px;
+  border-radius: 28px;
+  background-color: rgb(188, 236, 48);
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px;
+}
+
+.point {
+  display: flex;
+  gap: 8px;
+
+  p {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 110%;
+  }
+}

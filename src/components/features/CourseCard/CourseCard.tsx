@@ -1,8 +1,11 @@
+'use client'
+
 import { useCourses } from '@/hooks/useCourses'
 import { CourseType } from '@/sharedTypes/CourseType'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import styles from './courseCard.module.css'
 
 type CourseCardProps = {
@@ -10,6 +13,7 @@ type CourseCardProps = {
 }
 
 export default function CourseCard({ course }: CourseCardProps) {
+  const router = useRouter()
   const isLoading = useAppSelector((store) => store.courses.moveCourseIsLoading)
   const userCourses = useAppSelector((store) => store.courses.userCourses)
 
@@ -25,7 +29,10 @@ export default function CourseCard({ course }: CourseCardProps) {
   const { addCourse, removeCourse } = useCourses()
 
   return (
-    <article className={styles.card}>
+    <article
+      className={styles.card}
+      onClick={() => router.push(`/course/${course._id}`)}
+    >
       <div
         className={cn(
           styles.image_container,
@@ -84,9 +91,14 @@ export default function CourseCard({ course }: CourseCardProps) {
         title={isAdded ? 'Удалить курс' : 'Добавить курс'}
         className={styles.circleBtn}
         disabled={isLoading}
-        onClick={() =>
-          isAdded ? removeCourse(course._id) : addCourse(course._id)
-        }
+        onClick={(e) => {
+          e.stopPropagation()
+          if (isAdded) {
+            removeCourse(course._id)
+          } else {
+            addCourse(course._id)
+          }
+        }}
       >
         <Image
           src={isAdded ? '/icons/circle-remove.svg' : '/icons/circle-add.svg'}
