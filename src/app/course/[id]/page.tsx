@@ -1,6 +1,7 @@
 'use client'
 
 import StartJourney from '@/components/features/StartJourney/StartJourney'
+import { useCourses } from '@/hooks/useCourses'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import Image from 'next/image'
@@ -9,8 +10,9 @@ import { useEffect } from 'react'
 import styles from './page.module.css'
 
 export default function CoursePage() {
-  const router = useRouter()
   const { id } = useParams<{ id: string }>()
+  const router = useRouter()
+  const { addCourse } = useCourses()
 
   const allCourses = useAppSelector((store) => store.courses.allCourses)
   const userCourses = useAppSelector((store) => store.courses.userCourses)
@@ -19,11 +21,19 @@ export default function CoursePage() {
   const course = allCourses.find((course) => course._id === id)
   const isUserCourse = userCourses.find((el) => el._id === id)
 
-  const startJourneyText = !userName
-    ? 'Войдите, чтобы добавить курс'
-    : !isUserCourse
-      ? 'Добавить курс'
-      : 'Продолжить'
+  let startJourneyText: string
+  let action: () => void
+
+  if (!userName) {
+    startJourneyText = 'Войдите, чтобы добавить курс'
+    action = () => router.push('/auth/sign-in')
+  } else if (!isUserCourse) {
+    startJourneyText = 'Добавить курс'
+    action = () => addCourse(id)
+  } else {
+    startJourneyText = 'Продолжить'
+    action = () => console.log('открывается окно с выбором урока')
+  }
 
   useEffect(() => {
     if (allCourses.length > 0 && !course) {
@@ -87,7 +97,7 @@ export default function CoursePage() {
         </section>
       </main>
 
-      <StartJourney btnText={startJourneyText} />
+      <StartJourney btnText={startJourneyText} action={action} />
     </div>
   )
 }

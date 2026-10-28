@@ -3,9 +3,10 @@ import styles from './startJpurney.module.css'
 
 type StartJourneyType = {
   btnText: string
+  action: () => void
 }
 
-export default function StartJourney({ btnText }: StartJourneyType) {
+export default function StartJourney({ btnText, action }: StartJourneyType) {
   return (
     <div className={styles.wrapper}>
       <section className={styles.section}>
@@ -20,7 +21,9 @@ export default function StartJourney({ btnText }: StartJourneyType) {
             <li>помогают противостоять стрессам</li>
           </ul>
 
-          <button className={styles.btn}>{btnText}</button>
+          <button className={styles.btn} onClick={action}>
+            {btnText}
+          </button>
         </div>
       </section>
 
