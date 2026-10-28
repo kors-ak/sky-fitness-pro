@@ -1,0 +1,53 @@
+.profile {
+  width: 100%;
+  display: flex;
+  gap: 33px;
+  padding: 30px;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+}
+
+.content {
+  margin-left: 33px;
+}
+
+.info {
+  margin-bottom: 44px;
+
+  h2 {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 110%;
+    margin-bottom: 30px;
+  }
+
+  p {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+  }
+}
+
+.btn {
+  padding: 16px 68px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 46px;
+
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 110%;
+
+  &:hover {
+    background-color: rgb(247, 247, 247);
+  }
+
+  &:active {
+    background-color: rgb(233, 236, 237);
+  }
+
+  &.loading {
+    border-color: rgb(153, 153, 153);
+    color: rgb(153, 153, 153);
+  }
+}
