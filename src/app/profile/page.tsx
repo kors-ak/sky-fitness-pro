@@ -19,7 +19,7 @@ export default function Profile() {
 
       <section>
         <h2 className={styles.title}>Мои курсы</h2>
-        <CourseContainer courses={userCourses} />
+        <CourseContainer courses={userCourses} isProfile={true} />
       </section>
     </main>
   )

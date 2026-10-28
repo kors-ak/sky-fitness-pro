@@ -1,7 +1,8 @@
 'use client'
 
+import { useCourseProgress } from '@/hooks/useCourseProgress'
 import { useCourses } from '@/hooks/useCourses'
-import { CourseType } from '@/sharedTypes/CourseType'
+import { CourseType, UserCourseType } from '@/sharedTypes/CourseType'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import Image from 'next/image'
@@ -9,15 +10,43 @@ import { useRouter } from 'next/navigation'
 import styles from './courseCard.module.css'
 
 type CourseCardProps = {
-  course: CourseType
+  course: CourseType | UserCourseType
+  isProfileCourse: boolean
 }
 
-export default function CourseCard({ course }: CourseCardProps) {
+export default function CourseCard({
+  course,
+  isProfileCourse = false,
+}: CourseCardProps) {
   const router = useRouter()
   const isLoading = useAppSelector((store) => store.courses.moveCourseIsLoading)
   const userCourses = useAppSelector((store) => store.courses.userCourses)
+  const isAdded = userCourses.some((el) => el._id === course._id)
 
-  const isAdded = userCourses.find((el) => el._id === course._id)
+  const { addCourse, removeCourse } = useCourses()
+  const { progress, isLoading: isProgressLoading } = useCourseProgress(
+    course._id,
+    isProfileCourse
+  )
+
+  const handleProgressBtnAction = () => {
+    if (progress === 100) {
+      console.log('Удалить прогресс')
+    } else {
+      console.log('Начать тренировки')
+    }
+  }
+
+  const handleToggleCourse = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
+
+    if (isAdded) {
+      removeCourse(course._id)
+    } else {
+      addCourse(course._id)
+    }
+  }
+
   const dailyDuration = `${course.dailyDurationInMinutes.from}-${course.dailyDurationInMinutes.to}`
   const difficultyLevel =
     course.difficulty === 'начальный'
@@ -25,8 +54,12 @@ export default function CourseCard({ course }: CourseCardProps) {
       : course.difficulty === 'средний'
         ? 'medium'
         : 'hard'
-
-  const { addCourse, removeCourse } = useCourses()
+  const btnText =
+    progress === 100
+      ? 'Начать заново'
+      : progress > 0
+        ? 'Продолжить'
+        : 'Начать тренировки'
 
   return (
     <article
@@ -53,6 +86,7 @@ export default function CourseCard({ course }: CourseCardProps) {
 
       <div className={styles.content}>
         <h2 className={styles.heading}>{course.nameRU}</h2>
+
         <div className={styles.info}>
           <div className={styles.tag}>
             <Image
@@ -84,6 +118,30 @@ export default function CourseCard({ course }: CourseCardProps) {
             <p>Сложность</p>
           </div>
         </div>
+
+        {isProfileCourse && (
+          <div className={styles.progress_container}>
+            {isProgressLoading ? (
+              <p className={styles.progress_text}>Загрузка прогресса...</p>
+            ) : (
+              <>
+                <p className={styles.progress_text}>Прогресс {progress}%</p>
+                <div className={styles.progress}>
+                  <div
+                    className={styles.progress_bar}
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+                <button
+                  className={styles.progress_btn}
+                  onClick={handleProgressBtnAction}
+                >
+                  {btnText}
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       <button
@@ -91,14 +149,7 @@ export default function CourseCard({ course }: CourseCardProps) {
         title={isAdded ? 'Удалить курс' : 'Добавить курс'}
         className={styles.circleBtn}
         disabled={isLoading}
-        onClick={(e) => {
-          e.stopPropagation()
-          if (isAdded) {
-            removeCourse(course._id)
-          } else {
-            addCourse(course._id)
-          }
-        }}
+        onClick={handleToggleCourse}
       >
         <Image
           src={isAdded ? '/icons/circle-remove.svg' : '/icons/circle-add.svg'}

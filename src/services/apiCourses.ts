@@ -57,7 +57,7 @@ export const getCourseWorkouts = async (
   return request<WorkoutType[]>(
     'GET',
     `/courses/${courseId}/workouts`,
-    null,
+    undefined,
     token,
     3600
   )
@@ -74,8 +74,8 @@ export const getUserCourseProgress = async (
 
   return request<CourseProgress>(
     'GET',
-    `/users/me/progress?courseId={${courseId}}`,
-    null,
+    `/users/me/progress?courseId=${courseId}`,
+    undefined,
     token
   )
 }
@@ -89,5 +89,10 @@ export const removeUserCourseProgress = async (
     throw new Error('Токен авторизации не найден')
   }
 
-  return request<string>('PATCH', `/courses/${courseId}/reset`, null, token)
+  return request<string>(
+    'PATCH',
+    `/courses/${courseId}/reset`,
+    undefined,
+    token
+  )
 }

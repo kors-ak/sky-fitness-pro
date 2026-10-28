@@ -1,4 +1,6 @@
-export type CourseType = {
+import { WorkoutType } from './WorkoutType'
+
+type CourseGeneralInfo = {
   _id: string
   order: number
   nameRU: string
@@ -12,6 +14,9 @@ export type CourseType = {
     from: number
     to: number
   }
-  workouts: string[]
   __v: number
 }
+
+export type CourseType = CourseGeneralInfo & { workouts: string[] }
+
+export type UserCourseType = CourseGeneralInfo & { workouts: WorkoutType[] }
