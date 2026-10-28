@@ -3,10 +3,15 @@ import styles from './startJpurney.module.css'
 
 type StartJourneyType = {
   btnText: string
+  isLoading: boolean
   action: () => void
 }
 
-export default function StartJourney({ btnText, action }: StartJourneyType) {
+export default function StartJourney({
+  btnText,
+  isLoading,
+  action,
+}: StartJourneyType) {
   return (
     <div className={styles.wrapper}>
       <section className={styles.section}>
@@ -21,7 +26,7 @@ export default function StartJourney({ btnText, action }: StartJourneyType) {
             <li>помогают противостоять стрессам</li>
           </ul>
 
-          <button className={styles.btn} onClick={action}>
+          <button className={styles.btn} onClick={action} disabled={isLoading}>
             {btnText}
           </button>
         </div>

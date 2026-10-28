@@ -61,7 +61,7 @@
     color: rgb(255, 255, 255);
   }
 
-  &.loading {
+  &:disabled {
     background-color: rgb(247, 247, 247);
     color: rgb(153, 153, 153);
   }

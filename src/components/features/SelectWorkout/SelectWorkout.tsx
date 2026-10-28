@@ -22,7 +22,7 @@ export default function SelectWorkout({
     return () => {
       document.documentElement.style.overflow = ''
     }
-  }, [])
+  }, [isOpen])
 
   return (
     isOpen && (

@@ -1,39 +1,14 @@
-import { useProgress } from '@/hooks/useProgress'
 import { WorkoutType } from '@/sharedTypes/WorkoutType'
 import { useAppSelector } from '@/store/hooks'
-import { useEffect } from 'react'
 
-export function useCourseProgress(courseId: string, enabled: boolean) {
+export function useCourseProgress(courseId: string) {
   const userCourses = useAppSelector((state) => state.courses.userCourses)
   const userProgress = useAppSelector((state) => state.courses.userProgress)
   const isLoading = useAppSelector(
     (state) => state.courses.progressLoading[courseId] ?? false
   )
 
-  const { loadCourseWorkouts, loadUserProgress } = useProgress()
-
   const course = userCourses.find(({ _id }) => _id === courseId)
-  const isAdded = Boolean(course)
-
-  useEffect(() => {
-    if (!enabled || !course || isLoading) return
-
-    const firstWorkout = course.workouts[0]
-
-    if (course.workouts.length === 0 || typeof firstWorkout === 'string') {
-      loadCourseWorkouts(course._id)
-    }
-  }, [enabled, course, isLoading, loadCourseWorkouts])
-
-  useEffect(() => {
-    if (!enabled || !isAdded || isLoading) return
-
-    const hasProgress = userProgress.some((item) => item.courseId === courseId)
-
-    if (!hasProgress) {
-      loadUserProgress(courseId)
-    }
-  }, [enabled, courseId, isAdded, isLoading, userProgress, loadUserProgress])
 
   const workouts =
     course?.workouts.filter(

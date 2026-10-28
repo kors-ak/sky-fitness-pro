@@ -28,8 +28,7 @@ export default function CourseCard({
 
   const { addCourse, removeCourse } = useCourses()
   const { progress, isLoading: isProgressLoading } = useCourseProgress(
-    course._id,
-    isProfileCourse
+    course._id
   )
 
   const [isSelectWorkoutOpen, setIsSelectWorkoutOpen] = useState<boolean>(false)
@@ -71,113 +70,115 @@ export default function CourseCard({
         : 'Начать тренировки'
 
   return (
-    <article
-      className={styles.card}
-      onClick={() => router.push(`/course/${course.nameEN.toLowerCase()}`)}
-    >
-      <div
-        className={cn(
-          styles.image_container,
-          styles[course.nameEN.toLowerCase()]
-        )}
+    <>
+      <article
+        className={styles.card}
+        onClick={() => router.push(`/course/${course.nameEN.toLowerCase()}`)}
       >
-        <Image
-          className={styles.image}
-          src={`/images/${course.nameEN.toLowerCase()}-card.jpg`}
-          alt={course.nameRU}
-          fill
-          sizes="(max-width: 375px) 343px, 360px"
-          loading={
-            [1, 2, 3].find((el) => el === course.order) ? 'eager' : 'lazy'
-          }
-        />
-      </div>
-
-      <div className={styles.content}>
-        <h2 className={styles.heading}>{course.nameRU}</h2>
-
-        <div className={styles.info}>
-          <div className={styles.tag}>
-            <Image
-              src="/icons/calendar.svg"
-              alt="Длительность в днях"
-              width={18}
-              height={18}
-            />
-            <p>{course.durationInDays} дней</p>
-          </div>
-
-          <div className={styles.tag}>
-            <Image
-              src="/icons/time.svg"
-              alt="Нагрузка в день"
-              width={18}
-              height={18}
-            />
-            <p>{dailyDuration} мин/день</p>
-          </div>
-
-          <div className={styles.tag}>
-            <Image
-              src={`/icons/difficulty-${difficultyLevel}.svg`}
-              alt={course.difficulty}
-              width={18}
-              height={18}
-            />
-            <p>Сложность</p>
-          </div>
+        <div
+          className={cn(
+            styles.image_container,
+            styles[course.nameEN.toLowerCase()]
+          )}
+        >
+          <Image
+            className={styles.image}
+            src={`/images/${course.nameEN.toLowerCase()}-card.jpg`}
+            alt={course.nameRU}
+            fill
+            sizes="(max-width: 375px) 343px, 360px"
+            loading={
+              [1, 2, 3].find((el) => el === course.order) ? 'eager' : 'lazy'
+            }
+          />
         </div>
 
-        {isProfileCourse && (
-          <div className={styles.progress_container}>
-            {isProgressLoading ? (
-              <p className={styles.progress_text}>Загрузка прогресса...</p>
-            ) : (
-              <>
-                <p className={styles.progress_text}>Прогресс {progress}%</p>
-                <div className={styles.progress}>
-                  <div
-                    className={styles.progress_bar}
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
+        <div className={styles.content}>
+          <h2 className={styles.heading}>{course.nameRU}</h2>
 
-                <button
-                  className={styles.progress_btn}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleProgressBtnAction()
-                  }}
-                >
-                  {btnText}
-                </button>
+          <div className={styles.info}>
+            <div className={styles.tag}>
+              <Image
+                src="/icons/calendar.svg"
+                alt="Длительность в днях"
+                width={18}
+                height={18}
+              />
+              <p>{course.durationInDays} дней</p>
+            </div>
 
-                <SelectWorkout
-                  isOpen={isSelectWorkoutOpen}
-                  items={course.workouts as WorkoutType[]}
-                  onSelectCourse={() => setIsSelectWorkoutOpen(false)}
-                  onSelectWorkout={handleSelectWorkout}
-                />
-              </>
-            )}
+            <div className={styles.tag}>
+              <Image
+                src="/icons/time.svg"
+                alt="Нагрузка в день"
+                width={18}
+                height={18}
+              />
+              <p>{dailyDuration} мин/день</p>
+            </div>
+
+            <div className={styles.tag}>
+              <Image
+                src={`/icons/difficulty-${difficultyLevel}.svg`}
+                alt={course.difficulty}
+                width={18}
+                height={18}
+              />
+              <p>Сложность</p>
+            </div>
           </div>
-        )}
-      </div>
 
-      <button
-        type="button"
-        title={isAdded ? 'Удалить курс' : 'Добавить курс'}
-        className={styles.circleBtn}
-        disabled={isLoading}
-        onClick={handleToggleCourse}
-      >
-        <Image
-          src={isAdded ? '/icons/circle-remove.svg' : '/icons/circle-add.svg'}
-          alt={isAdded ? 'Удалить курс' : 'Добавить курс'}
-          width={32}
-          height={32}
-        />
-      </button>
-    </article>
+          {isProfileCourse && (
+            <div className={styles.progress_container}>
+              {isProgressLoading ? (
+                <p className={styles.progress_text}>Загрузка прогресса...</p>
+              ) : (
+                <>
+                  <p className={styles.progress_text}>Прогресс {progress}%</p>
+                  <div className={styles.progress}>
+                    <div
+                      className={styles.progress_bar}
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+
+                  <button
+                    className={styles.progress_btn}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleProgressBtnAction()
+                    }}
+                  >
+                    {btnText}
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+
+        <button
+          type="button"
+          title={isAdded ? 'Удалить курс' : 'Добавить курс'}
+          className={styles.circleBtn}
+          disabled={isLoading}
+          onClick={handleToggleCourse}
+        >
+          <Image
+            src={isAdded ? '/icons/circle-remove.svg' : '/icons/circle-add.svg'}
+            alt={isAdded ? 'Удалить курс' : 'Добавить курс'}
+            width={32}
+            height={32}
+          />
+        </button>
+      </article>
+
+      <SelectWorkout
+        isOpen={isSelectWorkoutOpen}
+        items={course.workouts as WorkoutType[]}
+        onSelectCourse={() => setIsSelectWorkoutOpen(false)}
+        onSelectWorkout={handleSelectWorkout}
+      />
+    </>
   )
 }
