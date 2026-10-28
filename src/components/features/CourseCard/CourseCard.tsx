@@ -3,10 +3,13 @@
 import { useCourseProgress } from '@/hooks/useCourseProgress'
 import { useCourses } from '@/hooks/useCourses'
 import { CourseType, UserCourseType } from '@/sharedTypes/CourseType'
+import { WorkoutType } from '@/sharedTypes/WorkoutType'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import SelectWorkout from '../SelectWorkout/SelectWorkout'
 import styles from './courseCard.module.css'
 
 type CourseCardProps = {
@@ -29,11 +32,13 @@ export default function CourseCard({
     isProfileCourse
   )
 
+  const [isSelectWorkoutOpen, setIsSelectWorkoutOpen] = useState<boolean>(false)
+
   const handleProgressBtnAction = () => {
     if (progress === 100) {
       console.log('Удалить прогресс')
     } else {
-      console.log('Начать тренировки')
+      setIsSelectWorkoutOpen(true)
     }
   }
 
@@ -45,6 +50,10 @@ export default function CourseCard({
     } else {
       addCourse(course._id)
     }
+  }
+
+  const handleSelectWorkout = (id: string) => {
+    router.push(`/course/${course.nameEN.toLowerCase()}/workout/${id}`)
   }
 
   const dailyDuration = `${course.dailyDurationInMinutes.from}-${course.dailyDurationInMinutes.to}`
@@ -64,7 +73,7 @@ export default function CourseCard({
   return (
     <article
       className={styles.card}
-      onClick={() => router.push(`/course/${course._id}`)}
+      onClick={() => router.push(`/course/${course.nameEN.toLowerCase()}`)}
     >
       <div
         className={cn(
@@ -132,12 +141,23 @@ export default function CourseCard({
                     style={{ width: `${progress}%` }}
                   />
                 </div>
+
                 <button
                   className={styles.progress_btn}
-                  onClick={handleProgressBtnAction}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleProgressBtnAction()
+                  }}
                 >
                   {btnText}
                 </button>
+
+                <SelectWorkout
+                  isOpen={isSelectWorkoutOpen}
+                  items={course.workouts as WorkoutType[]}
+                  onSelectCourse={() => setIsSelectWorkoutOpen(false)}
+                  onSelectWorkout={handleSelectWorkout}
+                />
               </>
             )}
           </div>

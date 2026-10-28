@@ -13,14 +13,30 @@ export function useProgress() {
   const router = useRouter()
   const dispatch = useAppDispatch()
 
-  const loadCourseProgress = useCallback(
+  const loadCourseWorkouts = useCallback(
     async (id: string) => {
       dispatch(setCourseProgressLoading({ id, isLoading: true }))
 
       try {
         const workouts = await getCourseWorkouts(id)
         dispatch(addUserCourseWorkouts({ id, workouts }))
+      } catch (error) {
+        console.error(`Ошибка загрузки курса ${id}:`, error)
 
+        const errorText = handleFetchError(error, dispatch, router)
+        alert(errorText)
+      } finally {
+        dispatch(setCourseProgressLoading({ id, isLoading: false }))
+      }
+    },
+    [dispatch, router]
+  )
+
+  const loadUserProgress = useCallback(
+    async (id: string) => {
+      dispatch(setCourseProgressLoading({ id, isLoading: true }))
+
+      try {
         const progress = await getUserCourseProgress(id)
         dispatch(setUserProgress(progress))
       } catch (error) {
@@ -35,5 +51,5 @@ export function useProgress() {
     [dispatch, router]
   )
 
-  return { loadCourseProgress }
+  return { loadCourseWorkouts, loadUserProgress }
 }

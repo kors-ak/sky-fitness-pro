@@ -10,16 +10,30 @@ export function useCourseProgress(courseId: string, enabled: boolean) {
     (state) => state.courses.progressLoading[courseId] ?? false
   )
 
-  const { loadCourseProgress } = useProgress()
+  const { loadCourseWorkouts, loadUserProgress } = useProgress()
 
   const course = userCourses.find(({ _id }) => _id === courseId)
   const isAdded = Boolean(course)
 
   useEffect(() => {
-    if (enabled && isAdded) {
-      loadCourseProgress(courseId)
+    if (!enabled || !course || isLoading) return
+
+    const firstWorkout = course.workouts[0]
+
+    if (course.workouts.length === 0 || typeof firstWorkout === 'string') {
+      loadCourseWorkouts(course._id)
     }
-  }, [enabled, courseId, isAdded, loadCourseProgress])
+  }, [enabled, course, isLoading, loadCourseWorkouts])
+
+  useEffect(() => {
+    if (!enabled || !isAdded || isLoading) return
+
+    const hasProgress = userProgress.some((item) => item.courseId === courseId)
+
+    if (!hasProgress) {
+      loadUserProgress(courseId)
+    }
+  }, [enabled, courseId, isAdded, isLoading, userProgress, loadUserProgress])
 
   const workouts =
     course?.workouts.filter(

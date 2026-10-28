@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 import styles from './page.module.css'
 
 export default function CoursePage() {
-  const { id } = useParams<{ id: string }>()
+  const { nameEN } = useParams<{ nameEN: string }>()
   const router = useRouter()
   const { addCourse } = useCourses()
 
@@ -18,18 +18,22 @@ export default function CoursePage() {
   const userCourses = useAppSelector((store) => store.courses.userCourses)
 
   const userName = useAppSelector((store) => store.user.username)
-  const course = allCourses.find((course) => course._id === id)
-  const isUserCourse = userCourses.find((el) => el._id === id)
+  const course = allCourses.find(
+    (course) => course.nameEN.toLowerCase() === nameEN
+  )
+  const isUserCourse = userCourses.find(
+    (el) => el.nameEN.toLowerCase() === nameEN
+  )
 
-  let startJourneyText: string
-  let action: () => void
+  let startJourneyText: string = ''
+  let action: () => void = () => null
 
   if (!userName) {
     startJourneyText = 'Войдите, чтобы добавить курс'
     action = () => router.push('/auth/sign-in')
   } else if (!isUserCourse) {
     startJourneyText = 'Добавить курс'
-    action = () => addCourse(id)
+    if (course) action = () => addCourse(course._id)
   } else {
     startJourneyText = 'Продолжить'
     action = () => console.log('открывается окно с выбором урока')
