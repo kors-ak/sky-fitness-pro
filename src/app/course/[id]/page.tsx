@@ -1,5 +1,6 @@
 'use client'
 
+import StartJourney from '@/components/features/StartJourney/StartJourney'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import Image from 'next/image'
@@ -12,7 +13,17 @@ export default function CoursePage() {
   const { id } = useParams<{ id: string }>()
 
   const allCourses = useAppSelector((store) => store.courses.allCourses)
+  const userCourses = useAppSelector((store) => store.courses.userCourses)
+
+  const userName = useAppSelector((store) => store.user.username)
   const course = allCourses.find((course) => course._id === id)
+  const isUserCourse = userCourses.find((el) => el._id === id)
+
+  const startJourneyText = !userName
+    ? 'Войдите, чтобы добавить курс'
+    : !isUserCourse
+      ? 'Добавить курс'
+      : 'Продолжить'
 
   useEffect(() => {
     if (allCourses.length > 0 && !course) {
@@ -75,6 +86,8 @@ export default function CoursePage() {
           </div>
         </section>
       </main>
+
+      <StartJourney btnText={startJourneyText} />
     </div>
   )
 }
