@@ -19,7 +19,12 @@ export default function CoursePage() {
 
   const allCourses = useAppSelector((store) => store.courses.allCourses)
   const userCourses = useAppSelector((store) => store.courses.userCourses)
-  const isLoading = useAppSelector((store) => store.courses.moveCourseIsLoading)
+  const isLoading = useAppSelector(
+    (store) =>
+      store.courses.moveCourseIsLoading ||
+      store.courses.fetchIsUserCoursesLoading ||
+      store.courses.fetchIsLoading
+  )
   const userName = useAppSelector((store) => store.user.username)
 
   const course = allCourses.find(

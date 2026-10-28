@@ -1,20 +1,46 @@
 .item {
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  color: #ffffff;
+  width: 100%;
+  min-width: 354px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
   cursor: pointer;
 
+  &:not(:last-child) {
+    border-bottom: 1px solid rgb(196, 196, 196);
+  }
+
   &:hover {
-    color: rgb(217, 182, 255);
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    background-color: rgb(247, 247, 247);
   }
 
   &:active {
-    color: rgb(182, 114, 255);
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    background-color: rgb(233, 236, 237);
+  }
+}
+
+.selected {
+  background-color: rgb(233, 236, 237);
+}
+
+.info {
+  width: 100%;
+  text-align: start;
+
+  h3 {
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 110%;
+  }
+
+  p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 110%;
   }
 }
 

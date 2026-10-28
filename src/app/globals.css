@@ -37,4 +37,5 @@ button {
   border: none;
   background-color: transparent;
   cursor: pointer;
+  transform: all 0.2s ease;
 }

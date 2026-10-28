@@ -1,5 +1,9 @@
+'use client'
+
 import { WorkoutType } from '@/sharedTypes/WorkoutType'
-import { useEffect } from 'react'
+import { useAppSelector } from '@/store/hooks'
+import sortTitles from '@/utils/sortTitles'
+import { useEffect, useState } from 'react'
 import SelectItem from '../SelectItem/SelectItem'
 import styles from './selectWorkout.module.css'
 
@@ -24,6 +28,11 @@ export default function SelectWorkout({
     }
   }, [isOpen])
 
+  const generalProgress = useAppSelector((store) => store.courses.userProgress)
+  const [selectedWorkout, setSelectedWorkout] = useState<string>('')
+  const toggleSelectedWorkout = (id: string) =>
+    selectedWorkout === id ? setSelectedWorkout('') : setSelectedWorkout(id)
+
   return (
     isOpen && (
       <div
@@ -33,18 +42,26 @@ export default function SelectWorkout({
           onSelectCourse()
         }}
       >
-        <div className={styles.container}>
+        <div className={styles.container} onClick={(e) => e.stopPropagation()}>
           <h2 className={styles.title}>Выберите тренировку</h2>
           <ul className={styles.list}>
-            {items.map((item) => (
+            {sortTitles([...items]).map((item) => (
               <SelectItem
                 key={item._id}
                 item={item}
-                onSelectWorkout={onSelectWorkout}
+                generalProgress={generalProgress}
+                isSelected={item._id === selectedWorkout}
+                onClick={() => toggleSelectedWorkout(item._id)}
               />
             ))}
-            <button className={styles.btn}>Начать</button>
           </ul>
+          <button
+            className={styles.btn}
+            disabled={!selectedWorkout}
+            onClick={() => onSelectWorkout(selectedWorkout)}
+          >
+            Начать
+          </button>
         </div>
       </div>
     )
