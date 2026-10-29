@@ -49,26 +49,23 @@ const coursesSlice = createSlice({
     setAllCourses: (state, action: PayloadAction<CourseType[]>) => {
       state.allCourses = action.payload
     },
-    setUserCourses: (state, action: PayloadAction<string[]>) => {
-      state.userCourses = state.allCourses
-        .filter((course) => action.payload.includes(course._id))
-        .map((course) => ({
-          ...course,
-          workouts: [],
-        }))
-    },
-    addNewUserCourse: (state, action: PayloadAction<string>) => {
+    addNewUserCourse: (
+      state,
+      action: PayloadAction<{ courseId: string; workouts: WorkoutType[] }>
+    ) => {
       const newCourse = state.allCourses.find(
-        (course) => course._id === action.payload
+        (course) => course._id === action.payload.courseId
       )
 
       if (
         newCourse &&
-        !state.userCourses.some((course) => course._id === action.payload)
+        !state.userCourses.some(
+          (course) => course._id === action.payload.courseId
+        )
       ) {
         state.userCourses.push({
           ...newCourse,
-          workouts: [],
+          workouts: action.payload.workouts,
         })
       }
     },
@@ -80,12 +77,12 @@ const coursesSlice = createSlice({
     addUserCourseWorkouts: (
       state,
       action: PayloadAction<{
-        id: string
+        courseId: string
         workouts: WorkoutType[]
       }>
     ) => {
       const currentCourse = state.userCourses.find(
-        (el) => el._id === action.payload.id
+        (el) => el._id === action.payload.courseId
       )
 
       if (currentCourse) {
@@ -127,7 +124,6 @@ export const {
   addNewUserCourse,
   removeNewUserCourse,
   setAllCourses,
-  setUserCourses,
   addUserCourseWorkouts,
   setUserProgress,
   setCourseProgressLoading,

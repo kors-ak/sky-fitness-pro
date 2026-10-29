@@ -1,10 +1,14 @@
-import { getAllCourses, getUserInfo } from '@/services/apiCourses'
+import {
+  getAllCourses,
+  getCourseWorkouts,
+  getUserInfo,
+} from '@/services/apiCourses'
 import { handleFetchError } from '@/services/errorHandling'
 import {
+  addNewUserCourse,
   setAllCourses,
   setFetchError,
   setFetchIsLoading,
-  setUserCourses,
   setUserCoursesError,
   setUserCoursesIsLoading,
 } from '@/store/features/coursesSlice'
@@ -39,7 +43,10 @@ export function useLoadCourses() {
 
     getUserInfo()
       .then((data) => {
-        dispatch(setUserCourses(data.user.selectedCourses))
+        data.user.selectedCourses.every(async (el) => {
+          const workouts = await getCourseWorkouts(el)
+          dispatch(addNewUserCourse({ courseId: el, workouts }))
+        })
       })
       .catch((error) => {
         const errorText = handleFetchError(error, dispatch, router)

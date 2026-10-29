@@ -19,7 +19,7 @@ export function useProgress() {
 
       try {
         const workouts = await getCourseWorkouts(id)
-        dispatch(addUserCourseWorkouts({ id, workouts }))
+        dispatch(addUserCourseWorkouts({ courseId: id, workouts }))
       } catch (error) {
         console.error(`Ошибка загрузки курса ${id}:`, error)
 

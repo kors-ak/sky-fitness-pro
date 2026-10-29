@@ -1,4 +1,8 @@
-import { addUserCourse, removeUserCourse } from '@/services/apiCourses'
+import {
+  addUserCourse,
+  getCourseWorkouts,
+  removeUserCourse,
+} from '@/services/apiCourses'
 import { handleFetchError } from '@/services/errorHandling'
 import {
   addNewUserCourse,
@@ -25,8 +29,9 @@ export function useCourses() {
 
       addUserCourse(courseId)
         .then(() => {
-          dispatch(addNewUserCourse(courseId))
+          return getCourseWorkouts(courseId)
         })
+        .then((workouts) => dispatch(addNewUserCourse({ courseId, workouts })))
         .catch((error) => {
           const errorText = handleFetchError(error, dispatch, router)
           if (errorText) alert(errorText)
