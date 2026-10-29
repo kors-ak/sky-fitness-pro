@@ -5,6 +5,7 @@ import UserInitializer from '@/components/initialization/UserInitializer'
 import ReduxProvider from '@/store/ReduxProvider'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
+import { ToastContainer } from 'react-toastify'
 import './globals.css'
 
 const roboto = Roboto({
@@ -28,9 +29,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
           <CoursesInitializer />
 
           <Header />
-
           <AuthBackground />
           {children}
+
+          <ToastContainer position="top-left" theme="colored" />
         </body>
       </html>
     </ReduxProvider>

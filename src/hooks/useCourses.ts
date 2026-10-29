@@ -12,6 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import { toast } from 'react-toastify'
 import { useProgress } from './useProgress'
 
 export function useCourses() {
@@ -37,7 +38,7 @@ export function useCourses() {
         .then(() => loadUserProgress(courseId))
         .catch((error) => {
           const errorText = handleFetchError(error, dispatch, router)
-          if (errorText) alert(errorText)
+          if (errorText) toast.error(errorText)
         })
         .finally(() => {
           dispatch(setMoveCourseIsLoading(false))
@@ -56,7 +57,7 @@ export function useCourses() {
         })
         .catch((error) => {
           const errorText = handleFetchError(error, dispatch, router)
-          if (errorText) alert(errorText)
+          if (errorText) toast.error(errorText)
         })
         .finally(() => {
           dispatch(setMoveCourseIsLoading(false))

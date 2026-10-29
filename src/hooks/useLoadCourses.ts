@@ -15,6 +15,7 @@ import {
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import { toast } from 'react-toastify'
 import { useProgress } from './useProgress'
 
 export function useLoadCourses() {
@@ -55,7 +56,7 @@ export function useLoadCourses() {
       .catch((error) => {
         const errorText = handleFetchError(error, dispatch, router)
         if (errorText) {
-          alert(errorText)
+          toast.error(errorText)
           dispatch(setUserCoursesError(errorText))
         }
       })

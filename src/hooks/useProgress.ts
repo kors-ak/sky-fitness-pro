@@ -13,6 +13,7 @@ import {
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import { toast } from 'react-toastify'
 
 export function useProgress() {
   const router = useRouter()
@@ -35,9 +36,8 @@ export function useProgress() {
           dispatch(setUserProgress(emptyProgress))
         }
       } catch (error) {
-        console.error(`Ошибка загрузки прогресса по курсу ${id}:`, error)
         const errorText = handleFetchError(error, dispatch, router)
-        alert(errorText)
+        toast.error(errorText)
       } finally {
         dispatch(setCourseProgressLoading({ id, isLoading: false }))
       }
@@ -53,9 +53,8 @@ export function useProgress() {
         await removeUserCourseProgress(courseId)
         await loadUserProgress(courseId)
       } catch (error) {
-        console.error(`Ошибка сброса прогресса по курсу ${courseId}:`, error)
         const errorText = handleFetchError(error, dispatch, router)
-        alert(errorText)
+        toast.error(errorText)
       } finally {
         dispatch(setCourseProgressLoading({ id: courseId, isLoading: false }))
       }
@@ -71,9 +70,8 @@ export function useProgress() {
         await removeUserWorkoutProgress(courseId, workoutId)
         await loadUserProgress(courseId)
       } catch (error) {
-        console.error(`Ошибка сброса прогресса по курсу ${courseId}:`, error)
         const errorText = handleFetchError(error, dispatch, router)
-        alert(errorText)
+        toast.error(errorText)
       } finally {
         dispatch(setCourseProgressLoading({ id: courseId, isLoading: false }))
       }
@@ -94,12 +92,8 @@ export function useProgress() {
         await loadUserProgress(courseId)
         return true
       } catch (error) {
-        console.error(
-          `Ошибка сохранения прогресса по тренировке ${workoutId}:`,
-          error
-        )
         const errorText = handleFetchError(error, dispatch, router)
-        alert(errorText)
+        toast.error(errorText)
         return false
       } finally {
         dispatch(setCourseProgressLoading({ id: courseId, isLoading: false }))
