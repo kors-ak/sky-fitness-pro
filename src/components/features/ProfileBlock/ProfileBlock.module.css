@@ -47,3 +47,35 @@
     color: rgb(153, 153, 153);
   }
 }
+
+@media (max-width: 760px) {
+  .profile {
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+
+    img {
+      width: 141px;
+      height: auto;
+    }
+  }
+
+  .info {
+    min-width: 282px;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 16px;
+  }
+}

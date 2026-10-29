@@ -10,3 +10,15 @@
   line-height: 110%;
   margin-bottom: 42px;
 }
+
+@media (max-width: 1024px) {
+  .profile {
+    margin-top: 40px;
+    gap: 24px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+}

@@ -143,9 +143,16 @@
   .image {
     object-position: right bottom;
   }
+
+  .stepairobic,
+  .bodyflex {
+    .image {
+      object-position: right top;
+    }
+  }
 }
 
-@media (max-width: 765px) {
+@media (max-width: 760px) {
   .main {
     gap: 40px;
   }
@@ -182,6 +189,13 @@
 
   .image {
     object-position: center bottom;
+  }
+
+  .stepairobic,
+  .bodyflex {
+    .image {
+      object-position: center top;
+    }
   }
 
   .hero {
