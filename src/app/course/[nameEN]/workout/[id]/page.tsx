@@ -3,6 +3,7 @@
 import VideoPlayer from '@/components/features/VideoPlayer/VideoPlayer'
 import WorkoutProgressBlock from '@/components/features/WorkoutProgress/WorkoutProgress'
 import ProgressInitializer from '@/components/initialization/ProgressInitializer'
+import { useProgress } from '@/hooks/useProgress'
 import { useAppSelector } from '@/store/hooks'
 import sortTitles from '@/utils/sortTitles'
 import { useParams } from 'next/navigation'
@@ -19,6 +20,10 @@ export default function Workout() {
   const workoutProgress = userProgress
     .find((el) => el.courseId === course?._id)
     ?.workoutsProgress.find((el) => el.workoutId === id)
+  const { saveWorkoutProgress, removeWorkoutProgress } = useProgress()
+  const isLoading = useAppSelector(
+    (s) => s.courses.progressLoading[course?._id ?? ''] ?? false
+  )
 
   if (!course || !workout) {
     return <ProgressInitializer courseId={course?._id || ''} />
@@ -34,8 +39,13 @@ export default function Workout() {
 
         <WorkoutProgressBlock
           index={workoutIndex}
-          exercises={workout?.exercises}
+          exercises={workout.exercises}
           progress={workoutProgress}
+          isLoading={isLoading}
+          onSave={(progressData) =>
+            saveWorkoutProgress(course._id, workout._id, progressData)
+          }
+          onReset={() => removeWorkoutProgress(course._id, workout._id)}
         />
       </div>
     </>

@@ -1,4 +1,9 @@
-import { getUserCourseProgress } from '@/services/apiCourses'
+import {
+  addUserWorkoutProgress,
+  getUserCourseProgress,
+  removeUserCourseProgress,
+  removeUserWorkoutProgress,
+} from '@/services/apiCourses'
 import { handleFetchError } from '@/services/errorHandling'
 import { CourseProgress } from '@/sharedTypes/ProgressType'
 import {
@@ -25,13 +30,7 @@ export function useProgress() {
           const emptyProgress: CourseProgress = {
             courseId: id,
             courseCompleted: false,
-            workoutsProgress: [
-              {
-                workoutId: '',
-                workoutCompleted: false,
-                progressData: [],
-              },
-            ],
+            workoutsProgress: [],
           }
           dispatch(setUserProgress(emptyProgress))
         }
@@ -46,5 +45,68 @@ export function useProgress() {
     [dispatch, router]
   )
 
-  return { loadUserProgress }
+  const removeCourseProgress = useCallback(
+    async (courseId: string) => {
+      dispatch(setCourseProgressLoading({ id: courseId, isLoading: true }))
+
+      try {
+        await removeUserCourseProgress(courseId)
+        await loadUserProgress(courseId)
+      } catch (error) {
+        console.error(`Ошибка сброса прогресса по курсу ${courseId}:`, error)
+        const errorText = handleFetchError(error, dispatch, router)
+        alert(errorText)
+      } finally {
+        dispatch(setCourseProgressLoading({ id: courseId, isLoading: false }))
+      }
+    },
+    [dispatch, router, loadUserProgress]
+  )
+
+  const removeWorkoutProgress = useCallback(
+    async (courseId: string, workoutId: string) => {
+      dispatch(setCourseProgressLoading({ id: courseId, isLoading: true }))
+
+      try {
+        await removeUserWorkoutProgress(courseId, workoutId)
+        await loadUserProgress(courseId)
+      } catch (error) {
+        console.error(`Ошибка сброса прогресса по курсу ${courseId}:`, error)
+        const errorText = handleFetchError(error, dispatch, router)
+        alert(errorText)
+      } finally {
+        dispatch(setCourseProgressLoading({ id: courseId, isLoading: false }))
+      }
+    },
+    [dispatch, router, loadUserProgress]
+  )
+
+  const saveWorkoutProgress = useCallback(
+    async (courseId: string, workoutId: string, progressData: number[]) => {
+      dispatch(setCourseProgressLoading({ id: courseId, isLoading: true }))
+
+      try {
+        await addUserWorkoutProgress(courseId, workoutId, progressData)
+        await loadUserProgress(courseId)
+        return true
+      } catch (error) {
+        console.error(
+          `Ошибка сохранения прогресса по тренировке ${workoutId}:`,
+          error
+        )
+        const errorText = handleFetchError(error, dispatch, router)
+        alert(errorText)
+      } finally {
+        dispatch(setCourseProgressLoading({ id: courseId, isLoading: false }))
+      }
+    },
+    [dispatch, router, loadUserProgress]
+  )
+
+  return {
+    loadUserProgress,
+    removeCourseProgress,
+    removeWorkoutProgress,
+    saveWorkoutProgress,
+  }
 }

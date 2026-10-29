@@ -2,13 +2,14 @@
 
 import { useCourseProgress } from '@/hooks/useCourseProgress'
 import { useCourses } from '@/hooks/useCourses'
+import { useProgress } from '@/hooks/useProgress'
 import { CourseType, UserCourseType } from '@/sharedTypes/CourseType'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import SelectWorkout from '../SelectWorkout/SelectWorkout'
+import SelectWorkout from '../../popups/SelectWorkout/SelectWorkout'
 import styles from './courseCard.module.css'
 
 type CourseCardProps = {
@@ -29,12 +30,13 @@ export default function CourseCard({
   const { progress, isLoading: isProgressLoading } = useCourseProgress(
     course._id
   )
+  const { removeCourseProgress } = useProgress()
 
   const [isSelectWorkoutOpen, setIsSelectWorkoutOpen] = useState<boolean>(false)
 
   const handleProgressBtnAction = () => {
     if (progress === 100) {
-      console.log('Удалить прогресс')
+      removeCourseProgress(course._id)
     } else {
       setIsSelectWorkoutOpen(true)
     }

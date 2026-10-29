@@ -23,7 +23,7 @@ export function useCourses() {
   const addCourse = useCallback(
     (courseId: string) => {
       if (!userName) {
-        alert('Войдите, чтобы добавить курс')
+        router.push('/auth/sign-in')
         return
       }
 

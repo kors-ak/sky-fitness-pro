@@ -1,11 +1,10 @@
 'use client'
 
 import { UserCourseType } from '@/sharedTypes/CourseType'
-import { WorkoutProgress } from '@/sharedTypes/ProgressType'
 import { useAppSelector } from '@/store/hooks'
 import sortTitles from '@/utils/sortTitles'
 import { useEffect, useState } from 'react'
-import SelectItem from '../SelectItem/SelectItem'
+import SelectItem from '../../features/SelectItem/SelectItem'
 import styles from './selectWorkout.module.css'
 
 type SelectWorkoutProps = {
@@ -28,16 +27,10 @@ export default function SelectWorkout({
       document.documentElement.style.overflow = ''
     }
   }, [isOpen])
-
-  const userProgress: WorkoutProgress[] = useAppSelector(
+  const courseProgress = useAppSelector(
     (store) => store.courses.userProgress
-  ).find((el) => el.courseId === course._id)?.workoutsProgress || [
-    {
-      workoutId: '',
-      workoutCompleted: false,
-      progressData: [],
-    },
-  ]
+  ).find((el) => el.courseId === course._id)
+  const workoutsProgress = courseProgress?.workoutsProgress ?? []
   const [selectedWorkout, setSelectedWorkout] = useState<string>('')
   const toggleSelectedWorkout = (id: string) =>
     selectedWorkout === id ? setSelectedWorkout('') : setSelectedWorkout(id)
@@ -54,11 +47,13 @@ export default function SelectWorkout({
         <div className={styles.container} onClick={(e) => e.stopPropagation()}>
           <h2 className={styles.title}>Выберите тренировку</h2>
           <ul className={styles.list}>
-            {sortTitles([...course.workouts]).map((item, i) => (
+            {sortTitles([...course.workouts]).map((item) => (
               <SelectItem
                 key={item._id}
                 item={item}
-                userProgress={userProgress[i]}
+                userProgress={workoutsProgress.find(
+                  (el) => el.workoutId === item._id
+                )}
                 isSelected={item._id === selectedWorkout}
                 onClick={() => toggleSelectedWorkout(item._id)}
               />

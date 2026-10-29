@@ -1,8 +1,8 @@
 'use client'
 
-import SelectWorkout from '@/components/features/SelectWorkout/SelectWorkout'
 import StartJourney from '@/components/features/StartJourney/StartJourney'
 import ProgressInitializer from '@/components/initialization/ProgressInitializer'
+import SelectWorkout from '@/components/popups/SelectWorkout/SelectWorkout'
 import { useCourses } from '@/hooks/useCourses'
 import { UserCourseType } from '@/sharedTypes/CourseType'
 import { useAppSelector } from '@/store/hooks'
@@ -124,12 +124,14 @@ export default function CoursePage() {
         />
       </div>
 
-      <SelectWorkout
-        isOpen={isSelectWorkoutOpen}
-        course={isUserCourse as UserCourseType}
-        onSelectCourse={() => setIsSelectWorkoutOpen(false)}
-        onSelectWorkout={handleSelectWorkout}
-      />
+      {isUserCourse && (
+        <SelectWorkout
+          isOpen={isSelectWorkoutOpen}
+          course={isUserCourse as UserCourseType}
+          onSelectCourse={() => setIsSelectWorkoutOpen(false)}
+          onSelectWorkout={handleSelectWorkout}
+        />
+      )}
     </>
   )
 }

@@ -83,7 +83,9 @@ const coursesSlice = createSlice({
       )
 
       if (isHere) {
-        state.userProgress.map((el) => (el === isHere ? action.payload : el))
+        state.userProgress = state.userProgress.map((el) =>
+          el.courseId === action.payload.courseId ? action.payload : el
+        )
       } else {
         state.userProgress.push(action.payload)
       }

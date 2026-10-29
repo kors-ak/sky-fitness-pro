@@ -7,7 +7,7 @@ import styles from './selectItem.module.css'
 
 type SelectItemProps = {
   item: WorkoutType
-  userProgress: WorkoutProgress
+  userProgress?: WorkoutProgress
   onClick: (name: string) => void
   isSelected: boolean
 }

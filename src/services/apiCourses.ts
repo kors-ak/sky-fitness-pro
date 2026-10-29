@@ -96,3 +96,40 @@ export const removeUserCourseProgress = async (
     token
   )
 }
+
+export const addUserWorkoutProgress = async (
+  courseId: string,
+  workoutId: string,
+  progressData: number[]
+): Promise<string> => {
+  const token = localStorage.getItem('token')
+
+  if (!token) {
+    throw new Error('Токен авторизации не найден')
+  }
+
+  return request<string>(
+    'PATCH',
+    `/courses/${courseId}/workouts/${workoutId}`,
+    { progressData: progressData },
+    token
+  )
+}
+
+export const removeUserWorkoutProgress = async (
+  courseId: string,
+  workoutId: string
+): Promise<string> => {
+  const token = localStorage.getItem('token')
+
+  if (!token) {
+    throw new Error('Токен авторизации не найден')
+  }
+
+  return request<string>(
+    'PATCH',
+    `/courses/${courseId}/workouts/${workoutId}/reset`,
+    undefined,
+    token
+  )
+}
