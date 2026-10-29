@@ -146,6 +146,32 @@
 }
 
 @media (max-width: 765px) {
+  .main {
+    gap: 40px;
+  }
+
+  .subtitle {
+    margin-bottom: 24px;
+    font-size: 24px;
+  }
+
+  .fitting {
+    div {
+      gap: 24px;
+      font-size: 18px;
+    }
+  }
+
+  .directions {
+    gap: 24px;
+  }
+
+  .point {
+    p {
+      font-size: 18px;
+    }
+  }
+
   .title {
     margin: 0;
     font-weight: 500;
