@@ -17,7 +17,8 @@
     "prettier": "^3.9.10",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "react-redux": "^9.3.0"
+    "react-redux": "^9.3.0",
+    "react-youtube": "^10.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",

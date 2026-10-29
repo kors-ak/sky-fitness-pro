@@ -18,9 +18,8 @@ export default function SelectItem({
   generalProgress,
   isSelected,
 }: SelectItemProps) {
-  const isDone = generalProgress.find(
-    (el) => el.courseId === item._id
-  )?.courseCompleted
+  const isDone =
+    generalProgress.find((el) => el.workoutsProgress)?.courseId === item._id
 
   return (
     <li

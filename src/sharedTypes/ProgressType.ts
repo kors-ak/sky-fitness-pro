@@ -9,3 +9,7 @@ export type WorkoutProgress = {
   workoutCompleted: boolean
   progressData: number[]
 }
+
+export type EmptyProgress = {
+  workoutId: string
+}
