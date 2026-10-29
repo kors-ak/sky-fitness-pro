@@ -48,8 +48,6 @@ export default function StartJourney({
           className={styles.boy_desktop}
         />
       </div>
-
-      <div className={styles.boy_mobile}></div>
     </div>
   )
 }

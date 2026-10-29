@@ -7,7 +7,7 @@ import { useCourses } from '@/hooks/useCourses'
 import { UserCourseType } from '@/sharedTypes/CourseType'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
-import Image from 'next/image'
+import Image, { getImageProps } from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import styles from './page.module.css'
@@ -63,6 +63,25 @@ export default function CoursePage() {
     return null
   }
 
+  const common = {
+    alt: course.nameRU,
+    fill: true,
+    sizes: '...',
+    className: styles.image,
+  }
+  const {
+    props: { srcSet: mobile },
+  } = getImageProps({
+    ...common,
+    src: `/images/${course.nameEN.toLowerCase()}-card.jpg`,
+  })
+  const {
+    props: { srcSet: desktop, ...rest },
+  } = getImageProps({
+    ...common,
+    src: `/images/${course.nameEN.toLowerCase()}-skill.jpg`,
+  })
+
   return (
     <>
       <ProgressInitializer courseId={course._id} enabled={!!isUserCourse} />
@@ -72,14 +91,12 @@ export default function CoursePage() {
             className={cn(styles.hero, styles[course.nameEN.toLowerCase()])}
           >
             <h1 className={styles.title}>{course.nameRU}</h1>
-            <Image
-              className={styles.image}
-              src={`/images/${course.nameEN.toLowerCase()}-skill.jpg`}
-              alt={course.nameRU}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              loading="eager"
-            />
+
+            <picture className={styles.image}>
+              <source media="(min-width: 901px)" srcSet={desktop} />
+              <source media="(max-width: 900px)" srcSet={mobile} />
+              <img {...rest} alt={course.nameRU} />
+            </picture>
           </section>
 
           <section>

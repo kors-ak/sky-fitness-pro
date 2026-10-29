@@ -122,3 +122,48 @@
     line-height: 110%;
   }
 }
+
+@media (max-width: 1024px) {
+  .fitting {
+    flex-direction: column;
+
+    div {
+      width: fit-content;
+      max-width: inherit;
+    }
+  }
+
+  .directions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .image {
+    object-position: right bottom;
+  }
+}
+
+@media (max-width: 765px) {
+  .title {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1px;
+    line-height: 1%;
+    color: transparent;
+  }
+
+  .image {
+    object-position: center bottom;
+  }
+
+  .hero {
+    height: 389px;
+  }
+
+  .directions {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 24px;
+  }
+}

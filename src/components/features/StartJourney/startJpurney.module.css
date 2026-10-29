@@ -89,3 +89,82 @@
 .boy_desktop_bg {
   pointer-events: none;
 }
+
+@media (max-width: 1280px) {
+  .wrapper {
+    margin-top: 180px;
+  }
+
+  .section {
+    position: relative;
+    z-index: 3;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .title {
+    max-width: initial;
+    font-size: 48px;
+  }
+
+  .boy_desktop {
+    height: 100%;
+    bottom: 236px;
+    right: -74px;
+    z-index: 2;
+  }
+
+  .boy_desktop_bg {
+    height: 100%;
+    bottom: 168px;
+    right: -96px;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 765px) {
+  .wrapper {
+    margin-top: 156px;
+  }
+
+  .section {
+    padding: 30px;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .title {
+    max-width: 283px;
+    font-size: 32px;
+  }
+
+  .list {
+    font-size: 18px;
+
+    li + li {
+      margin-top: 8px;
+    }
+  }
+
+  .btn {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .boy_desktop {
+    height: 80%;
+    bottom: 356px;
+    right: -70px;
+  }
+
+  .boy_desktop_bg {
+    height: 80%;
+    bottom: 298px;
+    right: -95px;
+  }
+}
