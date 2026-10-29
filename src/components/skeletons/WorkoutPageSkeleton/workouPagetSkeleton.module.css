@@ -1,0 +1,90 @@
+.title {
+  width: 420px;
+  max-width: 100%;
+  height: 60px;
+  margin: 8px 0 40px 0;
+  border-radius: 12px;
+}
+
+.video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 639px;
+  border-radius: 30px;
+}
+
+.progress {
+  margin-top: 40px;
+  padding: 30px;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+}
+
+.progress_title {
+  width: 240px;
+  height: 35px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 40px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row_text {
+  width: 70%;
+  height: 20px;
+  border-radius: 6px;
+}
+
+.row_bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 50px;
+}
+
+.btn {
+  width: 100%;
+  max-width: 320px;
+  height: 52px;
+  margin-top: 40px;
+  border-radius: 46px;
+}
+
+@media (max-width: 1024px) {
+  .title {
+    margin: 40px 0 24px 0;
+  }
+
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .title {
+    height: 26px;
+    width: 260px;
+  }
+
+  .progress {
+    padding: 20px;
+  }
+
+  .list {
+    grid-template-columns: 1fr;
+  }
+
+  .btn {
+    max-width: none;
+  }
+}

@@ -7,6 +7,7 @@ import styles from './homePageContent.module.css'
 
 export default function HomePageContent() {
   const courses = useAppSelector((store) => store.courses.allCourses)
+  const isLoading = useAppSelector((store) => store.courses.fetchIsLoading)
 
   return (
     <>
@@ -18,8 +19,13 @@ export default function HomePageContent() {
           <div className={styles.subtitle}>Измени своё тело за полгода!</div>
         </div>
 
-        {courses.length > 0 && (
-          <CourseContainer courses={courses} isProfile={false} />
+        {(isLoading || courses.length > 0) && (
+          <CourseContainer
+            courses={courses}
+            isProfile={false}
+            isLoading={isLoading}
+            skeletonCount={5}
+          />
         )}
       </main>
 

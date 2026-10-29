@@ -3,13 +3,16 @@
 import VideoPlayer from '@/components/features/VideoPlayer/VideoPlayer'
 import WorkoutProgressBlock from '@/components/features/WorkoutProgress/WorkoutProgress'
 import ProgressInitializer from '@/components/initialization/ProgressInitializer'
+import WorkoutSkeleton from '@/components/skeletons/WorkoutPageSkeleton/WorkoutPageSkeleton'
 import { useProgress } from '@/hooks/useProgress'
 import { useAppSelector } from '@/store/hooks'
 import sortTitles from '@/utils/sortTitles'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import styles from './page.module.css'
 
 export default function Workout() {
+  const router = useRouter()
   const { nameEN, id } = useParams<{ nameEN: string; id: string }>()
   const userCourses = useAppSelector((store) => store.courses.userCourses)
   const userProgress = useAppSelector((store) => store.courses.userProgress)
@@ -22,11 +25,28 @@ export default function Workout() {
     ?.workoutsProgress.find((el) => el.workoutId === id)
   const { saveWorkoutProgress, removeWorkoutProgress } = useProgress()
   const isLoading = useAppSelector(
-    (s) => s.courses.progressLoading[course?._id ?? ''] ?? false
+    (store) => store.courses.progressLoading[course?._id ?? ''] ?? false
+  )
+  const isCoursesLoading = useAppSelector(
+    (store) => store.courses.fetchIsUserCoursesLoading
   )
 
-  if (!course || !workout) {
-    return <ProgressInitializer courseId={course?._id || ''} />
+  const isDataMissing = !course || !workout
+  const isWaitingForData = isCoursesLoading || userCourses.length === 0
+
+  useEffect(() => {
+    if (isDataMissing && !isWaitingForData) {
+      router.replace('/not-found')
+    }
+  }, [isDataMissing, isWaitingForData, router])
+
+  if (isDataMissing) {
+    return (
+      <>
+        <ProgressInitializer courseId={course?._id || ''} />
+        {isWaitingForData && <WorkoutSkeleton />}
+      </>
+    )
   }
 
   return (

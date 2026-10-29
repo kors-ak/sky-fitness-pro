@@ -3,6 +3,7 @@
 import StartJourney from '@/components/features/StartJourney/StartJourney'
 import ProgressInitializer from '@/components/initialization/ProgressInitializer'
 import SelectWorkout from '@/components/popups/SelectWorkout/SelectWorkout'
+import CoursePageSkeleton from '@/components/skeletons/CoursePageSkeleton/CoursePageSkeleton'
 import { useCourses } from '@/hooks/useCourses'
 import { UserCourseType } from '@/sharedTypes/CourseType'
 import { useAppSelector } from '@/store/hooks'
@@ -24,6 +25,9 @@ export default function CoursePage() {
       store.courses.moveCourseIsLoading ||
       store.courses.fetchIsUserCoursesLoading ||
       store.courses.fetchIsLoading
+  )
+  const isCoursesLoading = useAppSelector(
+    (store) => store.courses.fetchIsLoading
   )
   const userName = useAppSelector((store) => store.user.username)
 
@@ -59,7 +63,11 @@ export default function CoursePage() {
     }
   }, [course, router, allCourses])
 
-  if (allCourses.length < 0 || !course) {
+  if (isCoursesLoading || allCourses.length === 0) {
+    return <CoursePageSkeleton />
+  }
+
+  if (!course) {
     return null
   }
 
