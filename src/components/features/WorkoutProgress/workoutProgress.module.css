@@ -179,3 +179,45 @@
     pointer-events: none;
   }
 }
+
+@media (max-width: 760px) {
+  .exercises {
+    margin: 24px 0;
+    padding: 30px;
+  }
+
+  .progress_container {
+    max-height: initial;
+    gap: 24px;
+  }
+
+  .progress_wrapper {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .form {
+    max-width: 343px;
+  }
+
+  .heading {
+    font-size: 32px;
+    margin-bottom: 34px;
+  }
+
+  .form_list {
+    max-width: 263px;
+    max-height: 337px;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .input {
+    font-size: 14px;
+  }
+}

@@ -4,3 +4,15 @@
   line-height: 100%;
   margin: 8px 0 40px 0;
 }
+
+@media (max-width: 1024px) {
+  .title {
+    margin: 40px 0 24px 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .title {
+    font-size: 24px;
+  }
+}
