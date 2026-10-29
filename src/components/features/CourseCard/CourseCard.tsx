@@ -3,7 +3,6 @@
 import { useCourseProgress } from '@/hooks/useCourseProgress'
 import { useCourses } from '@/hooks/useCourses'
 import { CourseType, UserCourseType } from '@/sharedTypes/CourseType'
-import { WorkoutType } from '@/sharedTypes/WorkoutType'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import Image from 'next/image'
@@ -175,7 +174,7 @@ export default function CourseCard({
 
       <SelectWorkout
         isOpen={isSelectWorkoutOpen}
-        items={course.workouts as WorkoutType[]}
+        course={course as UserCourseType}
         onSelectCourse={() => setIsSelectWorkoutOpen(false)}
         onSelectWorkout={handleSelectWorkout}
       />

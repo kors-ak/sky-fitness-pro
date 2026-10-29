@@ -1,7 +1,7 @@
-import { getCourseWorkouts, getUserCourseProgress } from '@/services/apiCourses'
+import { getUserCourseProgress } from '@/services/apiCourses'
 import { handleFetchError } from '@/services/errorHandling'
+import { CourseProgress } from '@/sharedTypes/ProgressType'
 import {
-  addUserCourseWorkouts,
   setCourseProgressLoading,
   setUserProgress,
 } from '@/store/features/coursesSlice'
@@ -13,35 +13,30 @@ export function useProgress() {
   const router = useRouter()
   const dispatch = useAppDispatch()
 
-  const loadCourseWorkouts = useCallback(
-    async (id: string) => {
-      dispatch(setCourseProgressLoading({ id, isLoading: true }))
-
-      try {
-        const workouts = await getCourseWorkouts(id)
-        dispatch(addUserCourseWorkouts({ courseId: id, workouts }))
-      } catch (error) {
-        console.error(`Ошибка загрузки курса ${id}:`, error)
-
-        const errorText = handleFetchError(error, dispatch, router)
-        alert(errorText)
-      } finally {
-        dispatch(setCourseProgressLoading({ id, isLoading: false }))
-      }
-    },
-    [dispatch, router]
-  )
-
   const loadUserProgress = useCallback(
     async (id: string) => {
       dispatch(setCourseProgressLoading({ id, isLoading: true }))
 
       try {
         const progress = await getUserCourseProgress(id)
-        dispatch(setUserProgress(progress))
+        if ('workoutsProgress' in progress) {
+          dispatch(setUserProgress(progress))
+        } else {
+          const emptyProgress: CourseProgress = {
+            courseId: id,
+            courseCompleted: false,
+            workoutsProgress: [
+              {
+                workoutId: '',
+                workoutCompleted: false,
+                progressData: [],
+              },
+            ],
+          }
+          dispatch(setUserProgress(emptyProgress))
+        }
       } catch (error) {
-        console.error(`Ошибка загрузки курса ${id}:`, error)
-
+        console.error(`Ошибка загрузки прогресса по курсу ${id}:`, error)
         const errorText = handleFetchError(error, dispatch, router)
         alert(errorText)
       } finally {
@@ -51,5 +46,5 @@ export function useProgress() {
     [dispatch, router]
   )
 
-  return { loadCourseWorkouts, loadUserProgress }
+  return { loadUserProgress }
 }

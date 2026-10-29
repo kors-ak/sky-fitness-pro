@@ -1,4 +1,3 @@
-import ProgressInitializer from '@/components/initialization/ProgressInitializer'
 import { CourseType, UserCourseType } from '@/sharedTypes/CourseType'
 import CourseCard from '../CourseCard/CourseCard'
 import styles from './courseContainer.module.css'
@@ -19,7 +18,6 @@ export default function CourseContainer({
             .sort((a, b) => a.order - b.order)
             .map((el) => (
               <div key={el._id}>
-                <ProgressInitializer courseId={el._id} enabled={isProfile} />
                 <CourseCard course={el} isProfileCourse={isProfile} />
               </div>
             ))

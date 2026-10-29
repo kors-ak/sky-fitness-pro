@@ -4,7 +4,7 @@ import SelectWorkout from '@/components/features/SelectWorkout/SelectWorkout'
 import StartJourney from '@/components/features/StartJourney/StartJourney'
 import ProgressInitializer from '@/components/initialization/ProgressInitializer'
 import { useCourses } from '@/hooks/useCourses'
-import { WorkoutType } from '@/sharedTypes/WorkoutType'
+import { UserCourseType } from '@/sharedTypes/CourseType'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import Image from 'next/image'
@@ -38,7 +38,6 @@ export default function CoursePage() {
   const handleSelectWorkout = (id: string) => {
     router.push(`/course/${course?.nameEN.toLowerCase()}/workout/${id}`)
   }
-  const workouts = userCourses.find((el) => el._id === course?._id)?.workouts
 
   let startJourneyText: string = ''
   let action: () => void = () => null
@@ -127,7 +126,7 @@ export default function CoursePage() {
 
       <SelectWorkout
         isOpen={isSelectWorkoutOpen}
-        items={workouts as WorkoutType[] | []}
+        course={isUserCourse as UserCourseType}
         onSelectCourse={() => setIsSelectWorkoutOpen(false)}
         onSelectWorkout={handleSelectWorkout}
       />

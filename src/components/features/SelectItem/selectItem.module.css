@@ -6,6 +6,7 @@
   justify-content: flex-start;
   gap: 10px;
   cursor: pointer;
+  transform: all 0.2s ease;
 
   &:not(:last-child) {
     border-bottom: 1px solid rgb(196, 196, 196);
@@ -42,10 +43,4 @@
     font-size: 16px;
     line-height: 110%;
   }
-}
-
-.itemSelected {
-  color: rgb(182, 114, 255);
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }

@@ -70,37 +70,23 @@ const coursesSlice = createSlice({
       }
     },
     removeNewUserCourse: (state, action: PayloadAction<string>) => {
-      state.userCourses = state.userCourses.filter(
+      state.userCourses = [...state.userCourses].filter(
         (course) => course._id !== action.payload
       )
-    },
-    addUserCourseWorkouts: (
-      state,
-      action: PayloadAction<{
-        courseId: string
-        workouts: WorkoutType[]
-      }>
-    ) => {
-      const currentCourse = state.userCourses.find(
-        (el) => el._id === action.payload.courseId
+      state.userProgress = [...state.userProgress].filter(
+        (course) => course.courseId !== action.payload
       )
-
-      if (currentCourse) {
-        currentCourse.workouts = action.payload.workouts
-      }
     },
     setUserProgress: (state, action: PayloadAction<CourseProgress>) => {
-      const isInArray = state.userProgress.find(
+      const isHere = state.userProgress.find(
         (el) => el.courseId === action.payload.courseId
       )
 
-      if (isInArray) {
-        state.userProgress.filter(
-          (el) => el.courseId !== action.payload.courseId
-        )
+      if (isHere) {
+        state.userProgress.map((el) => (el === isHere ? action.payload : el))
+      } else {
+        state.userProgress.push(action.payload)
       }
-
-      state.userProgress.push(action.payload)
     },
     setCourseProgressLoading: (
       state,
@@ -124,7 +110,6 @@ export const {
   addNewUserCourse,
   removeNewUserCourse,
   setAllCourses,
-  addUserCourseWorkouts,
   setUserProgress,
   setCourseProgressLoading,
   resetCourseSlice,

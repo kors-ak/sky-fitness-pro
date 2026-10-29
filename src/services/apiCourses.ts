@@ -1,5 +1,5 @@
 import { CourseType } from '@/sharedTypes/CourseType'
-import { CourseProgress } from '@/sharedTypes/ProgressType'
+import { CourseProgress, EmptyProgress } from '@/sharedTypes/ProgressType'
 import { UserInfoType } from '@/sharedTypes/UserInfoType'
 import { WorkoutType } from '@/sharedTypes/WorkoutType'
 import { request } from './constants'
@@ -65,14 +65,14 @@ export const getCourseWorkouts = async (
 
 export const getUserCourseProgress = async (
   courseId: string
-): Promise<CourseProgress> => {
+): Promise<CourseProgress | EmptyProgress> => {
   const token = localStorage.getItem('token')
 
   if (!token) {
     throw new Error('Токен авторизации не найден')
   }
 
-  return request<CourseProgress>(
+  return request<CourseProgress | EmptyProgress>(
     'GET',
     `/users/me/progress?courseId=${courseId}`,
     undefined,

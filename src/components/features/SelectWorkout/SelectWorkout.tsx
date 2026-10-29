@@ -1,6 +1,7 @@
 'use client'
 
-import { WorkoutType } from '@/sharedTypes/WorkoutType'
+import { UserCourseType } from '@/sharedTypes/CourseType'
+import { WorkoutProgress } from '@/sharedTypes/ProgressType'
 import { useAppSelector } from '@/store/hooks'
 import sortTitles from '@/utils/sortTitles'
 import { useEffect, useState } from 'react'
@@ -9,14 +10,14 @@ import styles from './selectWorkout.module.css'
 
 type SelectWorkoutProps = {
   isOpen: boolean
-  items: WorkoutType[]
+  course: UserCourseType
   onSelectCourse: () => void
   onSelectWorkout: (name: string) => void
 }
 
 export default function SelectWorkout({
   isOpen,
-  items,
+  course,
   onSelectCourse,
   onSelectWorkout,
 }: SelectWorkoutProps) {
@@ -28,7 +29,15 @@ export default function SelectWorkout({
     }
   }, [isOpen])
 
-  const generalProgress = useAppSelector((store) => store.courses.userProgress)
+  const userProgress: WorkoutProgress[] = useAppSelector(
+    (store) => store.courses.userProgress
+  ).find((el) => el.courseId === course._id)?.workoutsProgress || [
+    {
+      workoutId: '',
+      workoutCompleted: false,
+      progressData: [],
+    },
+  ]
   const [selectedWorkout, setSelectedWorkout] = useState<string>('')
   const toggleSelectedWorkout = (id: string) =>
     selectedWorkout === id ? setSelectedWorkout('') : setSelectedWorkout(id)
@@ -45,11 +54,11 @@ export default function SelectWorkout({
         <div className={styles.container} onClick={(e) => e.stopPropagation()}>
           <h2 className={styles.title}>Выберите тренировку</h2>
           <ul className={styles.list}>
-            {sortTitles([...items]).map((item) => (
+            {sortTitles([...course.workouts]).map((item, i) => (
               <SelectItem
                 key={item._id}
                 item={item}
-                generalProgress={generalProgress}
+                userProgress={userProgress[i]}
                 isSelected={item._id === selectedWorkout}
                 onClick={() => toggleSelectedWorkout(item._id)}
               />

@@ -16,7 +16,7 @@ export default function ProgressInitializer({
   const userCourses = useAppSelector((state) => state.courses.userCourses)
   const userProgress = useAppSelector((state) => state.courses.userProgress)
 
-  const { loadCourseWorkouts, loadUserProgress } = useProgress()
+  const { loadUserProgress } = useProgress()
 
   const initializedRef = useRef(new Set<string>())
 
@@ -24,10 +24,6 @@ export default function ProgressInitializer({
 
   useEffect(() => {
     if (!enabled || !course) return
-
-    const workoutsLoaded =
-      course.workouts.length > 0 &&
-      course.workouts.every((workout) => typeof workout !== 'string')
 
     const hasProgress = userProgress.some(
       (progress) => progress.courseId === courseId
@@ -41,10 +37,6 @@ export default function ProgressInitializer({
 
     const initialize = async () => {
       try {
-        if (!workoutsLoaded) {
-          await loadCourseWorkouts(courseId)
-        }
-
         if (!hasProgress) {
           await loadUserProgress(courseId)
         }
@@ -54,14 +46,7 @@ export default function ProgressInitializer({
     }
 
     void initialize()
-  }, [
-    enabled,
-    course,
-    courseId,
-    userProgress,
-    loadCourseWorkouts,
-    loadUserProgress,
-  ])
+  }, [enabled, course, courseId, userProgress, loadUserProgress])
 
   return null
 }

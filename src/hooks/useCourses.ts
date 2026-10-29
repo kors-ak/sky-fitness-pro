@@ -12,11 +12,13 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import { useProgress } from './useProgress'
 
 export function useCourses() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const userName = useAppSelector((store) => store.user.username)
+  const { loadUserProgress } = useProgress()
 
   const addCourse = useCallback(
     (courseId: string) => {
@@ -32,6 +34,7 @@ export function useCourses() {
           return getCourseWorkouts(courseId)
         })
         .then((workouts) => dispatch(addNewUserCourse({ courseId, workouts })))
+        .then(() => loadUserProgress(courseId))
         .catch((error) => {
           const errorText = handleFetchError(error, dispatch, router)
           if (errorText) alert(errorText)
@@ -40,7 +43,7 @@ export function useCourses() {
           dispatch(setMoveCourseIsLoading(false))
         })
     },
-    [dispatch, router, userName]
+    [dispatch, router, userName, loadUserProgress]
   )
 
   const removeCourse = useCallback(

@@ -15,10 +15,12 @@ import {
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import { useProgress } from './useProgress'
 
 export function useLoadCourses() {
   const dispatch = useAppDispatch()
   const router = useRouter()
+  const { loadUserProgress } = useProgress()
 
   const loadAllCourses = useCallback(() => {
     dispatch(setFetchError(''))
@@ -46,8 +48,10 @@ export function useLoadCourses() {
         data.user.selectedCourses.every(async (el) => {
           const workouts = await getCourseWorkouts(el)
           dispatch(addNewUserCourse({ courseId: el, workouts }))
+          return loadUserProgress(el)
         })
       })
+
       .catch((error) => {
         const errorText = handleFetchError(error, dispatch, router)
         if (errorText) {
@@ -58,7 +62,7 @@ export function useLoadCourses() {
       .finally(() => {
         dispatch(setUserCoursesIsLoading(false))
       })
-  }, [dispatch, router])
+  }, [dispatch, router, loadUserProgress])
 
   return { loadAllCourses, loadUserCourses }
 }

@@ -1,4 +1,4 @@
-import { CourseProgress } from '@/sharedTypes/ProgressType'
+import { WorkoutProgress } from '@/sharedTypes/ProgressType'
 import { WorkoutType } from '@/sharedTypes/WorkoutType'
 import parseTitle from '@/utils/parseTitle'
 import cn from 'classnames'
@@ -7,19 +7,18 @@ import styles from './selectItem.module.css'
 
 type SelectItemProps = {
   item: WorkoutType
+  userProgress: WorkoutProgress
   onClick: (name: string) => void
-  generalProgress: CourseProgress[]
   isSelected: boolean
 }
 
 export default function SelectItem({
   item,
+  userProgress,
   onClick,
-  generalProgress,
   isSelected,
 }: SelectItemProps) {
-  const isDone =
-    generalProgress.find((el) => el.workoutsProgress)?.courseId === item._id
+  const isDone = userProgress?.workoutCompleted
 
   return (
     <li
