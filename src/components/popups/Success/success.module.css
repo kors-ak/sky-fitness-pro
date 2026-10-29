@@ -26,3 +26,11 @@
   line-height: 110%;
   text-align: center;
 }
+
+@media (max-width: 520px) {
+  .title {
+    font-weight: 400;
+    max-width: 263px;
+    font-size: 32px;
+  }
+}

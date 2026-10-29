@@ -6,7 +6,7 @@
   justify-content: flex-start;
   gap: 10px;
   cursor: pointer;
-  transform: all 0.2s ease;
+  transition: all 0.2s ease;
 
   &:not(:last-child) {
     border-bottom: 1px solid rgb(196, 196, 196);
@@ -42,5 +42,23 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 110%;
+  }
+}
+
+@media (max-width: 520px) {
+  .item {
+    max-width: 283px;
+    min-width: 257px;
+  }
+
+  .info {
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 110%;
+    }
   }
 }

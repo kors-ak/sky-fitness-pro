@@ -67,3 +67,27 @@
     background-color: rgb(233, 236, 237);
   }
 }
+
+@media (max-width: 760px) {
+  .container {
+    margin: 0 20px;
+    padding: 20px 40px;
+    gap: 20px;
+  }
+
+  .text {
+    font-size: 24px;
+  }
+
+  .buttons {
+    width: 100%;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 16px;
+  }
+}

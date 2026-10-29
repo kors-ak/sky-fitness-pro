@@ -73,3 +73,26 @@
     pointer-events: none;
   }
 }
+
+@media (max-width: 520px) {
+  .container {
+    min-width: initial;
+    max-width: 343px;
+    padding: 30px;
+    align-items: flex-start;
+  }
+
+  .title {
+    margin-bottom: 34px;
+  }
+
+  .list {
+    height: max-content;
+    max-height: 335px;
+    max-width: 283px;
+  }
+
+  .btn {
+    width: 283px;
+  }
+}

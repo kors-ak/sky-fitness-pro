@@ -191,7 +191,12 @@
     object-position: center bottom;
   }
 
-  .stepairobic,
+  .stepairobic {
+    .image {
+      object-position: right top;
+    }
+  }
+
   .bodyflex {
     .image {
       object-position: center top;
