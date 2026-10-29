@@ -18,3 +18,9 @@
   align-items: center;
   gap: 48px;
 }
+
+@media (max-width: 760px) {
+  .container {
+    padding: 40px 31px;
+  }
+}

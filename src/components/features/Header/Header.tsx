@@ -4,7 +4,7 @@ import { useAppSelector } from '@/store/hooks'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import UserBlock from '../../popups/UserBlock/UserBlock'
+import UserBlock from '../UserBlock/UserBlock'
 import styles from './header.module.css'
 
 export default function Header() {

@@ -44,3 +44,20 @@
     mask: url('/icons/decorative_triangle.svg') center / contain no-repeat;
   }
 }
+
+@media (max-width: 1280px) {
+  .heading {
+    font-size: 48px;
+  }
+
+  .subtitle {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .heading {
+    font-size: 32px;
+    line-height: 110%;
+  }
+}

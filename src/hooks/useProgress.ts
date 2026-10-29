@@ -82,7 +82,11 @@ export function useProgress() {
   )
 
   const saveWorkoutProgress = useCallback(
-    async (courseId: string, workoutId: string, progressData: number[]) => {
+    async (
+      courseId: string,
+      workoutId: string,
+      progressData: number[]
+    ): Promise<boolean> => {
       dispatch(setCourseProgressLoading({ id: courseId, isLoading: true }))
 
       try {
@@ -96,6 +100,7 @@ export function useProgress() {
         )
         const errorText = handleFetchError(error, dispatch, router)
         alert(errorText)
+        return false
       } finally {
         dispatch(setCourseProgressLoading({ id: courseId, isLoading: false }))
       }

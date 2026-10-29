@@ -16,6 +16,7 @@
   font-size: 24px;
   line-height: 110%;
   position: relative;
+  margin-right: 24px;
 
   &::after {
     content: '';
@@ -31,5 +32,17 @@
     border-right: 2px solid #000;
     border-bottom: 2px solid #000;
     rotate: 45deg;
+  }
+}
+
+@media (max-width: 750px) {
+  .user {
+    gap: 10px;
+  }
+
+  .user__info {
+    width: 1px;
+    font-size: 1px;
+    color: transparent;
   }
 }

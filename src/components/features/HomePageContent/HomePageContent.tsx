@@ -18,7 +18,9 @@ export default function HomePageContent() {
           <div className={styles.subtitle}>Измени своё тело за полгода!</div>
         </div>
 
-        {courses.length > 0 && <CourseContainer courses={courses} />}
+        {courses.length > 0 && (
+          <CourseContainer courses={courses} isProfile={false} />
+        )}
       </main>
 
       <ScrollToTop />
