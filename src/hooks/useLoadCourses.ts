@@ -7,10 +7,9 @@ import { handleFetchError } from '@/services/errorHandling'
 import {
   addNewUserCourse,
   setAllCourses,
-  setFetchError,
   setFetchIsLoading,
-  setUserCoursesError,
   setUserCoursesIsLoading,
+  setUserCoursesLoaded,
 } from '@/store/features/coursesSlice'
 import { useAppDispatch } from '@/store/hooks'
 import { useRouter } from 'next/navigation'
@@ -24,7 +23,6 @@ export function useLoadCourses() {
   const { loadUserProgress } = useProgress()
 
   const loadAllCourses = useCallback(() => {
-    dispatch(setFetchError(''))
     dispatch(setFetchIsLoading(true))
 
     getAllCourses()
@@ -33,36 +31,38 @@ export function useLoadCourses() {
       })
       .catch((error) => {
         const errorText = handleFetchError(error, dispatch, router)
-        dispatch(setFetchError(errorText))
+        toast.error(errorText)
       })
       .finally(() => {
         dispatch(setFetchIsLoading(false))
       })
   }, [dispatch, router])
 
-  const loadUserCourses = useCallback(() => {
-    dispatch(setUserCoursesError(''))
+  const loadUserCourses = useCallback(async () => {
     dispatch(setUserCoursesIsLoading(true))
 
-    getUserInfo()
-      .then((data) => {
-        data.user.selectedCourses.every(async (el) => {
-          const workouts = await getCourseWorkouts(el)
-          dispatch(addNewUserCourse({ courseId: el, workouts }))
-          return loadUserProgress(el)
-        })
-      })
+    try {
+      const { user } = await getUserInfo()
 
-      .catch((error) => {
-        const errorText = handleFetchError(error, dispatch, router)
-        if (errorText) {
-          toast.error(errorText)
-          dispatch(setUserCoursesError(errorText))
-        }
-      })
-      .finally(() => {
-        dispatch(setUserCoursesIsLoading(false))
-      })
+      await Promise.all(
+        user.selectedCourses.map(async (courseId) => {
+          const workouts = await getCourseWorkouts(courseId)
+          dispatch(addNewUserCourse({ courseId, workouts }))
+          await loadUserProgress(courseId)
+        })
+      )
+
+      dispatch(setUserCoursesLoaded(true))
+    } catch (error) {
+      const errorText = handleFetchError(error, dispatch, router)
+
+      if (errorText) {
+        toast.error(errorText)
+        dispatch(setUserCoursesLoaded(true))
+      }
+    } finally {
+      dispatch(setUserCoursesIsLoading(false))
+    }
   }, [dispatch, router, loadUserProgress])
 
   return { loadAllCourses, loadUserCourses }

@@ -5,7 +5,6 @@ import ProgressInitializer from '@/components/initialization/ProgressInitializer
 import SelectWorkout from '@/components/popups/SelectWorkout/SelectWorkout'
 import CoursePageSkeleton from '@/components/skeletons/CoursePageSkeleton/CoursePageSkeleton'
 import { useCourses } from '@/hooks/useCourses'
-import { UserCourseType } from '@/sharedTypes/CourseType'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import Image, { getImageProps } from 'next/image'
@@ -152,7 +151,7 @@ export default function CoursePage() {
       {isUserCourse && (
         <SelectWorkout
           isOpen={isSelectWorkoutOpen}
-          course={isUserCourse as UserCourseType}
+          course={isUserCourse}
           onSelectCourse={() => setIsSelectWorkoutOpen(false)}
           onSelectWorkout={handleSelectWorkout}
         />

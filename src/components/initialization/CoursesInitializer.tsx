@@ -6,7 +6,9 @@ import { useEffect } from 'react'
 
 export default function CoursesInitializer() {
   const allCourses = useAppSelector((state) => state.courses.allCourses)
-  const userCourses = useAppSelector((state) => state.courses.userCourses)
+  const isUserCoursesLoaded = useAppSelector(
+    (state) => state.courses.isUserCoursesLoaded
+  )
   const username = useAppSelector((state) => state.user.username)
   const { loadAllCourses, loadUserCourses } = useLoadCourses()
 
@@ -17,10 +19,10 @@ export default function CoursesInitializer() {
   }, [allCourses.length, loadAllCourses])
 
   useEffect(() => {
-    if (!userCourses.length && username) {
+    if (username && allCourses.length > 0 && !isUserCoursesLoaded) {
       loadUserCourses()
     }
-  }, [userCourses.length, username, loadUserCourses])
+  }, [username, allCourses.length, isUserCoursesLoaded, loadUserCourses])
 
   return null
 }

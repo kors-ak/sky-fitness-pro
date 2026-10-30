@@ -27,28 +27,36 @@ export default function Workout() {
   const isLoading = useAppSelector(
     (store) => store.courses.progressLoading[course?._id ?? ''] ?? false
   )
-  const isCoursesLoading = useAppSelector(
-    (store) => store.courses.fetchIsUserCoursesLoading
+  const isUserInitialized = useAppSelector((store) => store.user.isInitialized)
+  const username = useAppSelector((store) => store.user.username)
+  const isUserCoursesLoaded = useAppSelector(
+    (store) => store.courses.isUserCoursesLoaded
   )
 
+  const isGuest = isUserInitialized && !username
+  const isWaitingForData =
+    !isUserInitialized || (!isGuest && !isUserCoursesLoaded)
   const isDataMissing = !course || !workout
-  const isWaitingForData = isCoursesLoading || userCourses.length === 0
 
   useEffect(() => {
-    if (isDataMissing && !isWaitingForData) {
+    if (isGuest) {
+      router.replace('/auth/sign-in')
+      return
+    }
+
+    if (!isWaitingForData && isDataMissing) {
       router.replace('/not-found')
     }
-  }, [isDataMissing, isWaitingForData, router])
+  }, [isGuest, isWaitingForData, isDataMissing, router])
 
   if (isDataMissing) {
     return (
       <>
         <ProgressInitializer courseId={course?._id || ''} />
-        {isWaitingForData && <WorkoutSkeleton />}
+        <WorkoutSkeleton />
       </>
     )
   }
-
   return (
     <>
       <ProgressInitializer courseId={course?._id || ''} />

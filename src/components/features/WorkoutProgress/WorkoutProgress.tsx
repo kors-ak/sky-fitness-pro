@@ -1,7 +1,7 @@
 import Success from '@/components/popups/Success/Success'
 import { WorkoutProgress } from '@/sharedTypes/ProgressType'
 import { ExerciseType } from '@/sharedTypes/WorkoutType'
-import { cutAfterBracket } from '@/utils/cutAfterBracket '
+import { cutAfterBracket } from '@/utils/cutAfterBracket'
 import { useEffect, useState } from 'react'
 import styles from './workoutProgress.module.css'
 

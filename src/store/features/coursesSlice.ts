@@ -5,9 +5,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type initialStateType = {
   fetchIsLoading: boolean
-  fetchError: string
   fetchIsUserCoursesLoading: boolean
-  fetchUserCoursesError: string
+  isUserCoursesLoaded: boolean
   moveCourseIsLoading: boolean
   allCourses: CourseType[]
   userCourses: UserCourseType[]
@@ -17,9 +16,8 @@ type initialStateType = {
 
 const initialState: initialStateType = {
   fetchIsLoading: false,
-  fetchError: '',
   fetchIsUserCoursesLoading: false,
-  fetchUserCoursesError: '',
+  isUserCoursesLoaded: false,
   moveCourseIsLoading: false,
   allCourses: [],
   userCourses: [],
@@ -34,14 +32,11 @@ const coursesSlice = createSlice({
     setFetchIsLoading: (state, action: PayloadAction<boolean>) => {
       state.fetchIsLoading = action.payload
     },
-    setFetchError: (state, action: PayloadAction<string>) => {
-      state.fetchError = action.payload
-    },
     setUserCoursesIsLoading: (state, action: PayloadAction<boolean>) => {
       state.fetchIsUserCoursesLoading = action.payload
     },
-    setUserCoursesError: (state, action: PayloadAction<string>) => {
-      state.fetchUserCoursesError = action.payload
+    setUserCoursesLoaded: (state, action: PayloadAction<boolean>) => {
+      state.isUserCoursesLoaded = action.payload
     },
     setMoveCourseIsLoading: (state, action: PayloadAction<boolean>) => {
       state.moveCourseIsLoading = action.payload
@@ -105,9 +100,8 @@ const coursesSlice = createSlice({
 
 export const {
   setFetchIsLoading,
-  setFetchError,
   setUserCoursesIsLoading,
-  setUserCoursesError,
+  setUserCoursesLoaded,
   setMoveCourseIsLoading,
   addNewUserCourse,
   removeNewUserCourse,

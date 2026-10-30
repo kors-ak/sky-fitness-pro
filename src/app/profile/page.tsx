@@ -3,15 +3,23 @@
 import CourseContainer from '@/components/features/CourseContainer/CourseContainer'
 import ProfileBlock from '@/components/features/ProfileBlock/ProfileBlock'
 import { useAppSelector } from '@/store/hooks'
+import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 
 export default function Profile() {
+  const router = useRouter()
   const userName = useAppSelector((store) => store.user.username)
+  const isInitialized = useAppSelector((store) => store.user.isInitialized)
   const userEmail = useAppSelector((store) => store.user.email)
   const userCourses = useAppSelector((store) => store.courses.userCourses)
   const isCoursesLoading = useAppSelector(
     (store) => store.courses.fetchIsUserCoursesLoading
   )
+
+  if (isInitialized && !userName) {
+    router.replace('/auth/sign-in')
+    return
+  }
 
   return (
     <main className={styles.profile}>

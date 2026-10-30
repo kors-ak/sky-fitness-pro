@@ -1,4 +1,4 @@
-import { cutAfterBracket } from './cutAfterBracket '
+import { cutAfterBracket } from './cutAfterBracket'
 
 describe('cutAfterBracket', () => {
   it('Оставляет только текст до первой открывающейся скобки', () => {
