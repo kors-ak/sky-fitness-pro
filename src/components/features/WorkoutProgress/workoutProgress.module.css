@@ -1,0 +1,223 @@
+.exercises {
+  margin: 40px 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+}
+
+.title {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 110%;
+}
+
+.progress_container {
+  width: 100%;
+  max-height: 160px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px 60px;
+}
+
+.progress_wrapper {
+  width: 320px;
+}
+
+.progress_text {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 110%;
+  margin-bottom: 10px;
+}
+
+.progress {
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  background-color: rgb(247, 247, 247);
+  border-radius: 50px;
+}
+
+.progress_bar {
+  height: 100%;
+  background-color: rgb(0, 193, 255);
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+.btn {
+  margin-top: 20px;
+  width: 320px;
+  padding: 16px;
+  border-radius: 46px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 110%;
+  background-color: rgb(188, 236, 48);
+
+  &:hover {
+    background-color: rgb(198, 255, 0);
+  }
+
+  &:active {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+  }
+
+  &:disabled {
+    background-color: rgb(247, 247, 247);
+    color: rgb(153, 153, 153);
+    pointer-events: none;
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.form {
+  max-width: 426px;
+  padding: 40px;
+  border-radius: 30px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 100;
+}
+
+.heading {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 110%;
+  margin-bottom: 48px;
+}
+
+.form_list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: max-content;
+  max-height: 346px;
+  overflow-y: auto;
+  width: max-content;
+  max-width: 346px;
+  padding-right: 26px;
+}
+
+.form_list::-webkit-scrollbar {
+  background-color: rgb(247, 247, 247);
+  width: 6px;
+  border-radius: 10px;
+}
+
+.form_list::-webkit-scrollbar-thumb {
+  background-color: rgb(0, 0, 0);
+  border-radius: 10px;
+  transform: scaleY(0.33);
+}
+
+.question {
+  display: block;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 110%;
+  padding: 0 2px;
+}
+
+.input {
+  margin-top: 10px;
+  display: block;
+  width: 100%;
+  padding: 16px 18px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 110%;
+  border-radius: 8px;
+  border: 1px solid rgb(208, 206, 206);
+
+  &::placeholder {
+    color: rgb(208, 206, 206);
+  }
+}
+
+.form_btn {
+  margin-top: 34px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 46px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 110%;
+  background-color: rgb(188, 236, 48);
+
+  &:hover {
+    background-color: rgb(198, 255, 0);
+  }
+
+  &:active {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+  }
+
+  &:disabled {
+    background-color: rgb(247, 247, 247);
+    color: rgb(153, 153, 153);
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .exercises {
+    margin: 24px 0;
+    padding: 30px;
+  }
+
+  .progress_container {
+    max-height: initial;
+    gap: 24px;
+  }
+
+  .progress_wrapper {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .form {
+    max-width: 343px;
+  }
+
+  .heading {
+    font-size: 32px;
+    margin-bottom: 34px;
+  }
+
+  .form_list {
+    max-width: 263px;
+    max-height: 337px;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .input {
+    font-size: 14px;
+  }
+}

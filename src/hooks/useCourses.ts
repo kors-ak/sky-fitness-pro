@@ -1,0 +1,70 @@
+import {
+  addUserCourse,
+  getCourseWorkouts,
+  removeUserCourse,
+} from '@/services/apiCourses'
+import { handleFetchError } from '@/services/errorHandling'
+import {
+  addNewUserCourse,
+  removeNewUserCourse,
+  setMoveCourseIsLoading,
+} from '@/store/features/coursesSlice'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { useRouter } from 'next/navigation'
+import { useCallback } from 'react'
+import { toast } from 'react-toastify'
+import { useProgress } from './useProgress'
+
+export function useCourses() {
+  const dispatch = useAppDispatch()
+  const router = useRouter()
+  const userName = useAppSelector((store) => store.user.username)
+  const { loadUserProgress } = useProgress()
+
+  const addCourse = useCallback(
+    (courseId: string) => {
+      if (!userName) {
+        router.push('/auth/sign-in')
+        return
+      }
+
+      dispatch(setMoveCourseIsLoading(true))
+
+      addUserCourse(courseId)
+        .then(() => {
+          return getCourseWorkouts(courseId)
+        })
+        .then((workouts) => dispatch(addNewUserCourse({ courseId, workouts })))
+        .then(() => loadUserProgress(courseId))
+        .catch((error) => {
+          const errorText = handleFetchError(error, dispatch, router)
+          if (errorText) toast.error(errorText)
+        })
+        .finally(() => {
+          dispatch(setMoveCourseIsLoading(false))
+        })
+    },
+    [dispatch, router, userName, loadUserProgress]
+  )
+
+  const removeCourse = useCallback(
+    (courseId: string) => {
+      dispatch(setMoveCourseIsLoading(true))
+
+      removeUserCourse(courseId)
+        .then(() => {
+          dispatch(removeNewUserCourse(courseId))
+        })
+        .catch((error) => {
+          const errorText = handleFetchError(error, dispatch, router)
+          if (errorText) toast.error(errorText)
+        })
+        .finally(() => {
+          dispatch(setMoveCourseIsLoading(false))
+        })
+    },
+    [dispatch, router]
+  )
+
+  return { addCourse, removeCourse }
+}

@@ -1,0 +1,112 @@
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+.card {
+  width: 360px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+  background-color: rgb(255, 255, 255);
+}
+
+.block {
+  background: linear-gradient(
+    90deg,
+    rgb(247, 247, 247) 25%,
+    rgb(233, 236, 237) 50%,
+    rgb(247, 247, 247) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.image {
+  width: 100%;
+  height: 325px;
+  border-radius: 30px;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px 30px 15px 30px;
+}
+
+.heading {
+  width: 70%;
+  height: 35px;
+  border-radius: 8px;
+}
+
+.info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  height: 38px;
+  border-radius: 50px;
+}
+
+.tag:nth-child(1) {
+  width: 106px;
+}
+
+.tag:nth-child(2) {
+  width: 146px;
+}
+
+.tag:nth-child(3) {
+  width: 118px;
+}
+
+.progress_container {
+  width: 100%;
+}
+
+.progress_text {
+  width: 40%;
+  height: 20px;
+  border-radius: 6px;
+}
+
+.progress {
+  margin-top: 10px;
+  width: 100%;
+  height: 6px;
+  border-radius: 50px;
+}
+
+.progress_btn {
+  margin-top: 40px;
+  width: 100%;
+  height: 52px;
+  border-radius: 46px;
+}
+
+@media (max-width: 1280px) {
+  .card {
+    width: 343px;
+  }
+}
+
+@media (max-width: 760px) {
+  .heading {
+    height: 26px;
+  }
+
+  .content {
+    padding: 24px 21px 15px 21px;
+  }
+}

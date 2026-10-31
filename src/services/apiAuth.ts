@@ -16,11 +16,11 @@ type SignupResponse = {
 }
 
 export const loginUser = async (data: LoginProps): Promise<LoginResponse> => {
-  return request<LoginResponse>('/auth/login', data)
+  return request<LoginResponse>('POST', '/auth/login', data)
 }
 
 export const signupUser = async (
   data: SignupProps
 ): Promise<SignupResponse> => {
-  return request<SignupResponse>('/auth/register', data)
+  return request<SignupResponse>('POST', '/auth/register', data)
 }

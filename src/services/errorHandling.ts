@@ -1,3 +1,9 @@
+import { resetCourseSlice } from '@/store/features/coursesSlice'
+import { clearUserData } from '@/store/features/userSlice'
+import { AppDispatch } from '@/store/store'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import { toast } from 'react-toastify'
+
 export const handleAuthError = (
   error: unknown,
   callback: (message: string) => void
@@ -31,7 +37,23 @@ export const handleAuthError = (
   callback('Не удалось войти. Попробуйте позже')
 }
 
-export const handleFetchError = (error: unknown): string => {
+export const handleFetchError = (
+  error: unknown,
+  dispatch: AppDispatch,
+  router: AppRouterInstance
+): string => {
+  if (
+    error instanceof Error &&
+    error.message === 'Токен авторизации не найден'
+  ) {
+    toast.error('Время аворизации истекло, необходимо повториь вход')
+    dispatch(clearUserData())
+    dispatch(resetCourseSlice())
+    router.replace('/auth/sign-in')
+
+    return ''
+  }
+
   if (error instanceof TypeError) {
     return 'Проверьте подключение к сети и повторите попытку'
   }

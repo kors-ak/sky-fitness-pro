@@ -1,10 +1,16 @@
+'use client'
+
+import { useAppSelector } from '@/store/hooks'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import UserBlock from '../UserBlock/UserBlock'
 import styles from './header.module.css'
 
 export default function Header() {
-  const isAuth = true
+  const router = useRouter()
+  const username = useAppSelector((state) => state.user.username)
+  const isInitialized = useAppSelector((state) => state.user.isInitialized)
 
   return (
     <header className={styles.header}>
@@ -22,10 +28,15 @@ export default function Header() {
           Онлайн-тренировки для занятий дома
         </p>
       </div>
-      {isAuth ? (
-        <UserBlock />
+      {!username && isInitialized ? (
+        <button
+          className={styles.header__button}
+          onClick={() => router.push('/auth/sign-in')}
+        >
+          Войти
+        </button>
       ) : (
-        <button className={styles.header__button}>Войти</button>
+        <UserBlock />
       )}
     </header>
   )

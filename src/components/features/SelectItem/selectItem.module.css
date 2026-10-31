@@ -1,0 +1,64 @@
+.item {
+  width: 100%;
+  min-width: 354px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgb(196, 196, 196);
+  }
+
+  &:hover {
+    background-color: rgb(247, 247, 247);
+  }
+
+  &:active {
+    background-color: rgb(233, 236, 237);
+  }
+}
+
+.selected {
+  background-color: rgb(233, 236, 237);
+}
+
+.info {
+  width: 100%;
+  text-align: start;
+
+  h3 {
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 110%;
+  }
+
+  p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 110%;
+  }
+}
+
+@media (max-width: 520px) {
+  .item {
+    max-width: 283px;
+    min-width: 257px;
+  }
+
+  .info {
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 110%;
+    }
+  }
+}

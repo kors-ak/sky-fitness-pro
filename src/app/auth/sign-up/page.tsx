@@ -62,7 +62,7 @@ export default function SignUpPage() {
         <input
           className={cn(styles.input, {
             [styles.inputError]: Boolean(
-              errors.password || apiError.includes('почта')
+              errors.email || apiError.includes('почта')
             ),
           })}
           type="email"
@@ -80,7 +80,9 @@ export default function SignUpPage() {
           Пароль
         </label>
         <input
-          className={styles.input}
+          className={cn(styles.input, {
+            [styles.inputError]: Boolean(errors.password),
+          })}
           type="password"
           name="password"
           id="password"
@@ -95,7 +97,9 @@ export default function SignUpPage() {
           Повторите пароль
         </label>
         <input
-          className={styles.input}
+          className={cn(styles.input, {
+            [styles.inputError]: Boolean(errors.secondPassword),
+          })}
           type="password"
           name="confirmPassword"
           id="confirmPassword"

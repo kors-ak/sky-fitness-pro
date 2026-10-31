@@ -35,9 +35,10 @@
     color: rgb(255, 255, 255);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 760px) {
     right: 16px;
     bottom: 29px;
     transform: none;
+    left: initial;
   }
 }

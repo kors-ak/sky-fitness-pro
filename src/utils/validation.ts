@@ -1,4 +1,10 @@
-export const EMAIL_REGEX = /^[^\s@]{2,}@[^.\s@]+(?:\.[^.\s@]+)+$/
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+export const validateSignInEmail = (value: string) =>
+  value.trim() ? '' : 'Введите почту'
+
+export const validateSignInPassword = (value: string) =>
+  value ? '' : 'Введите пароль'
 
 export const validateLogin = (value: string) => {
   const emailValue = value.trim()
@@ -13,19 +19,17 @@ export const validateLogin = (value: string) => {
 }
 
 export const validatePassword = (value: string) => {
-  const password = value.trim()
+  if (!value.trim()) return 'Введите пароль'
 
-  if (!password) return 'Введите пароль'
-
-  if (password.length < 6) {
+  if (value.length < 6) {
     return 'Минимум 6 символов'
   }
 
-  if ((password.match(/[^a-zA-Zа-яА-Я0-9]/g) ?? []).length < 2) {
+  if ((value.match(/[^\p{L}\p{N}\s]/gu) ?? []).length < 2) {
     return 'Минимум 2 спецсимвола'
   }
 
-  if (!/[A-ZА-Я]/.test(password)) {
+  if (!/\p{Lu}/u.test(value)) {
     return 'Минимум 1 заглавная буква'
   }
 
@@ -36,11 +40,9 @@ export const validateSecondPassword = (
   value: string,
   firstPassword: string
 ) => {
-  const password = value.trim()
+  if (!value.trim()) return 'Повторите пароль'
 
-  if (!password) return 'Повторите пароль'
-
-  if (password !== firstPassword) {
+  if (value !== firstPassword) {
     return 'Пароли не совпадают'
   }
 
