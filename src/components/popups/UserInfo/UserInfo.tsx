@@ -1,3 +1,4 @@
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 import { useAppSelector } from '@/store/hooks'
 import cn from 'classnames'
 import Link from 'next/link'
@@ -17,6 +18,8 @@ export default function UserInfo({
 }: PropsType) {
   const userName = useAppSelector((state) => state.user.username)
   const userEmail = useAppSelector((state) => state.user.email)
+
+  useEscapeKey(() => changeIsOpen(false), isOpen)
 
   return (
     <>

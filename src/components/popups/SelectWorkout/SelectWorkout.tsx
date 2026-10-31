@@ -1,5 +1,6 @@
 'use client'
 
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 import { UserCourseType } from '@/sharedTypes/CourseType'
 import { useAppSelector } from '@/store/hooks'
 import sortTitles from '@/utils/sortTitles'
@@ -27,11 +28,17 @@ export default function SelectWorkout({
       document.documentElement.style.overflow = ''
     }
   }, [isOpen])
+
+  useEscapeKey(onSelectCourse, isOpen)
+
   const courseProgress = useAppSelector(
     (store) => store.courses.userProgress
   ).find((el) => el.courseId === course._id)
+
   const workoutsProgress = courseProgress?.workoutsProgress ?? []
+
   const [selectedWorkout, setSelectedWorkout] = useState<string>('')
+
   const toggleSelectedWorkout = (id: string) =>
     selectedWorkout === id ? setSelectedWorkout('') : setSelectedWorkout(id)
 

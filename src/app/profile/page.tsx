@@ -4,22 +4,26 @@ import CourseContainer from '@/components/features/CourseContainer/CourseContain
 import ProfileBlock from '@/components/features/ProfileBlock/ProfileBlock'
 import { useAppSelector } from '@/store/hooks'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import styles from './page.module.css'
 
 export default function Profile() {
   const router = useRouter()
   const userName = useAppSelector((store) => store.user.username)
-  const isInitialized = useAppSelector((store) => store.user.isInitialized)
   const userEmail = useAppSelector((store) => store.user.email)
+  const isInitialized = useAppSelector((store) => store.user.isInitialized)
   const userCourses = useAppSelector((store) => store.courses.userCourses)
   const isCoursesLoading = useAppSelector(
     (store) => store.courses.fetchIsUserCoursesLoading
   )
 
-  if (isInitialized && !userName) {
-    router.replace('/auth/sign-in')
-    return
-  }
+  useEffect(() => {
+    if (isInitialized && !userName) {
+      router.replace('/auth/sign-in')
+    }
+  }, [isInitialized, userName, router])
+
+  if (!userName) return null
 
   return (
     <main className={styles.profile}>

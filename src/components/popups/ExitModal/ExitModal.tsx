@@ -1,3 +1,4 @@
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 import { resetCourseSlice } from '@/store/features/coursesSlice'
 import { clearUserData } from '@/store/features/userSlice'
 import { useAppDispatch } from '@/store/hooks'
@@ -13,6 +14,8 @@ type PropsType = {
 export default function ExitModal({ changeIsOpen }: PropsType) {
   const router = useRouter()
   const dispatch = useAppDispatch()
+
+  useEscapeKey(() => changeIsOpen(false))
 
   useEffect(() => {
     document.documentElement.style.overflow = 'hidden'

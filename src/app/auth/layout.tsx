@@ -1,5 +1,6 @@
 'use client'
 
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -12,6 +13,8 @@ type AuthLayoutProps = {
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
   const router = useRouter()
+
+  useEscapeKey(() => router.push('/'))
 
   useEffect(() => {
     document.documentElement.style.overflow = 'hidden'

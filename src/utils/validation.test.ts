@@ -2,6 +2,8 @@ import {
   validateLogin,
   validatePassword,
   validateSecondPassword,
+  validateSignInEmail,
+  validateSignInPassword,
 } from './validation'
 
 describe('validateLogin', () => {
@@ -62,5 +64,46 @@ describe('validateSecondPassword', () => {
     expect(validateSecondPassword('Abc123!!', 'Abc456!!')).toBe(
       'Пароли не совпадают'
     )
+  })
+})
+
+describe('validateLogin: допустимые адреса', () => {
+  it.each([
+    'a@mail.ru',
+    'first.last+tag@sub.example.co',
+    '  test@example.com  ',
+  ])('принимает «%s»', (email) => {
+    expect(validateLogin(email)).toBe('')
+  })
+})
+
+describe('пробелы в паролях', () => {
+  it('одинаковые пароли с пробелом на конце совпадают', () => {
+    expect(validateSecondPassword('Abc123!! ', 'Abc123!! ')).toBe('')
+  })
+
+  it('пробел на конце делает пароли разными', () => {
+    expect(validateSecondPassword('Abc123!! ', 'Abc123!!')).toBe(
+      'Пароли не совпадают'
+    )
+  })
+
+  it('пробелы не считаются спецсимволами', () => {
+    expect(validatePassword('Abcdef  ')).toBe('Минимум 2 спецсимвола')
+  })
+
+  it('заглавная «Ё» считается заглавной буквой', () => {
+    expect(validatePassword('Ёе123!!')).toBe('')
+  })
+})
+
+describe('валидация на входе', () => {
+  it('требует только непустые поля', () => {
+    expect(validateSignInEmail('')).toBe('Введите почту')
+    expect(validateSignInPassword('')).toBe('Введите пароль')
+  })
+
+  it('не применяет правила сложности пароля', () => {
+    expect(validateSignInPassword('abc')).toBe('')
   })
 })

@@ -4,6 +4,8 @@ import {
   validateLogin,
   validatePassword,
   validateSecondPassword,
+  validateSignInEmail,
+  validateSignInPassword,
 } from '@/utils/validation'
 import { ChangeEvent, useState } from 'react'
 
@@ -21,7 +23,14 @@ const initialErrors: AuthErrors = {
   secondPassword: '',
 }
 
+const validators = {
+  'sign-in': { email: validateSignInEmail, password: validateSignInPassword },
+  'sign-up': { email: validateLogin, password: validatePassword },
+}
+
 export function useAuthForm(mode: AuthFormMode) {
+  const { email: checkEmail, password: checkPassword } = validators[mode]
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [secondPassword, setSecondPassword] = useState('')
@@ -37,10 +46,7 @@ export function useAuthForm(mode: AuthFormMode) {
     setApiError('')
 
     if (isSubmitted) {
-      setErrors((prev) => ({
-        ...prev,
-        email: validateLogin(value),
-      }))
+      setErrors((prev) => ({ ...prev, email: checkEmail(value) }))
     }
   }
 
@@ -52,11 +58,9 @@ export function useAuthForm(mode: AuthFormMode) {
     if (isSubmitted) {
       setErrors((prev) => ({
         ...prev,
-        password: validatePassword(value),
+        password: checkPassword(value),
         ...(mode === 'sign-up' && secondPassword
-          ? {
-              secondPassword: validateSecondPassword(secondPassword, value),
-            }
+          ? { secondPassword: validateSecondPassword(secondPassword, value) }
           : {}),
       }))
     }

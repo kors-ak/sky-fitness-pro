@@ -10,7 +10,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 
-export default function SignUpPage() {
+export default function SignInPage() {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
@@ -66,7 +66,7 @@ export default function SignUpPage() {
         <input
           className={cn(styles.input, {
             [styles.inputError]: Boolean(
-              errors.password || apiError.includes('email')
+              errors.email || apiError.includes('email')
             ),
           })}
           type="email"

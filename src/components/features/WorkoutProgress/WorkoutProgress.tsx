@@ -1,4 +1,5 @@
 import Success from '@/components/popups/Success/Success'
+import { useEscapeKey } from '@/hooks/useEscapeKey'
 import { WorkoutProgress } from '@/sharedTypes/ProgressType'
 import { ExerciseType } from '@/sharedTypes/WorkoutType'
 import { cutAfterBracket } from '@/utils/cutAfterBracket'
@@ -34,6 +35,8 @@ export default function WorkoutProgressBlock({
 
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+
+  useEscapeKey(() => setIsFormOpen(false), isFormOpen)
 
   useEffect(() => {
     if (!isSuccess) return
