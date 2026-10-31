@@ -4,7 +4,7 @@ _Учебный проект по frontend-разработке_
 
 Веб-приложение для онлайн-тренировок. Сервис позволяет изучать каталог фитнес-курсов, добавлять их в свой профиль, проходить тренировки с видео и отслеживать свой прогресс.
 
-🚀 **Live Demo:** [https://sky-fitness-pro-git-capstone-kors-ak1.vercel.app/](https://sky-fitness-pro-git-capstone-kors-ak1.vercel.app/)
+🚀 **Live Demo:** [https://sky-fitness-pro-eta.vercel.app/](https://sky-fitness-pro-eta.vercel.app/)
 
 ## Функциональность
 
@@ -24,15 +24,15 @@ _Учебный проект по frontend-разработке_
 
 - **Next.js 16** (App Router, Turbopack)
 - **React 19** с **React Compiler**
-- **TypeScript** — типизация компонентов, данных и функций.
-- **Redux Toolkit / React Redux** — глобальное состояние: курсы, прогресс, пользователь, статусы загрузки.
-- **Fetch API** — запросы к REST API.
-- **CSS Modules и classnames** — стилизация компонентов.
-- **React Toastify** — уведомления.
-- **React YouTube** — воспроизведение видео тренировок.
-- **Jest** — модульное тестирование вспомогательных функций.
-- **React Testing Library** — тестирование React-компонентов.
-- **ESLint и Prettier** — проверка и форматирование кода.
+- **TypeScript** - типизация компонентов, данных и функций.
+- **Redux Toolkit / React Redux** - глобальное состояние: курсы, прогресс, пользователь, статусы загрузки.
+- **Fetch API** - запросы к REST API.
+- **CSS Modules и classnames** - стилизация компонентов.
+- **React Toastify** - уведомления.
+- **React YouTube** - воспроизведение видео тренировок.
+- **Jest** - модульное тестирование вспомогательных функций.
+- **React Testing Library** - тестирование React-компонентов.
+- **ESLint и Prettier** - проверка и форматирование кода.
 - **HTML5**
 - **CSS3**
 - **Git**
