@@ -11,7 +11,7 @@ import { ChangeEvent, useState } from 'react'
 
 type AuthErrors = {
   email: string
-  password: string
+  password: string[]
   secondPassword: string
 }
 
@@ -19,7 +19,7 @@ type AuthFormMode = 'sign-in' | 'sign-up'
 
 const initialErrors: AuthErrors = {
   email: '',
-  password: '',
+  password: [],
   secondPassword: '',
 }
 
@@ -93,7 +93,11 @@ export function useAuthForm(mode: AuthFormMode) {
 
     setErrors(newErrors)
 
-    return !newErrors.email && !newErrors.password && !newErrors.secondPassword
+    return (
+      !newErrors.email &&
+      newErrors.password.length === 0 &&
+      !newErrors.secondPassword
+    )
   }
 
   return {

@@ -4,7 +4,7 @@ export const validateSignInEmail = (value: string) =>
   value.trim() ? '' : 'Введите почту'
 
 export const validateSignInPassword = (value: string) =>
-  value ? '' : 'Введите пароль'
+  value ? [] : ['Введите пароль']
 
 export const validateLogin = (value: string) => {
   const emailValue = value.trim()
@@ -19,21 +19,18 @@ export const validateLogin = (value: string) => {
 }
 
 export const validatePassword = (value: string) => {
-  if (!value.trim()) return 'Введите пароль'
+  const result = []
 
-  if (value.length < 6) {
-    return 'Минимум 6 символов'
-  }
+  if (!value.trim()) result.push('Введите пароль')
 
-  if ((value.match(/[^\p{L}\p{N}\s]/gu) ?? []).length < 2) {
-    return 'Минимум 2 спецсимвола'
-  }
+  if (value.length < 6) result.push('Минимум 6 символов')
 
-  if (!/\p{Lu}/u.test(value)) {
-    return 'Минимум 1 заглавная буква'
-  }
+  if ((value.match(/[^\p{L}\p{N}\s]/gu) ?? []).length < 2)
+    result.push('Минимум 2 спецсимвола')
 
-  return ''
+  if (!/\p{Lu}/u.test(value)) result.push('Минимум 1 заглавная буква')
+
+  return result
 }
 
 export const validateSecondPassword = (

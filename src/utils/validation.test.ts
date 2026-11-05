@@ -25,28 +25,41 @@ describe('validateLogin', () => {
 
 describe('validatePassword', () => {
   it('Обрабатывает валидный пароль', () => {
-    expect(validatePassword('Abc123!!')).toBe('')
+    expect(validatePassword('Abc123!!')).toEqual([])
   })
 
   it('Обрабатывает валидные пароли с кириллицей', () => {
-    expect(validatePassword('Абв123!!')).toBe('')
+    expect(validatePassword('Абв123!!')).toEqual([])
   })
 
   it('Возвращает отшибку при пустом пароле', () => {
-    expect(validatePassword('')).toBe('Введите пароль')
-    expect(validatePassword('   ')).toBe('Введите пароль')
+    expect(validatePassword('')).toEqual([
+      'Введите пароль',
+      'Минимум 6 символов',
+      'Минимум 2 спецсимвола',
+      'Минимум 1 заглавная буква',
+    ])
+    expect(validatePassword('   ')).toEqual([
+      'Введите пароль',
+      'Минимум 6 символов',
+      'Минимум 2 спецсимвола',
+      'Минимум 1 заглавная буква',
+    ])
   })
 
   it('Не пропускает пароль короче 6 символов', () => {
-    expect(validatePassword('Ab!12')).toBe('Минимум 6 символов')
+    expect(validatePassword('Ab!12')).toEqual([
+      'Минимум 6 символов',
+      'Минимум 2 спецсимвола',
+    ])
   })
 
   it('Не пропускает пароль без минимум двух спецсимволов', () => {
-    expect(validatePassword('Abc123!')).toBe('Минимум 2 спецсимвола')
+    expect(validatePassword('Abc123!')).toEqual(['Минимум 2 спецсимвола'])
   })
 
   it('Не пропускает пароль без заглавной буквы', () => {
-    expect(validatePassword('abc123!!')).toBe('Минимум 1 заглавная буква')
+    expect(validatePassword('abc123!!')).toEqual(['Минимум 1 заглавная буква'])
   })
 })
 
@@ -89,21 +102,21 @@ describe('пробелы в паролях', () => {
   })
 
   it('пробелы не считаются спецсимволами', () => {
-    expect(validatePassword('Abcdef  ')).toBe('Минимум 2 спецсимвола')
+    expect(validatePassword('Abcdef  ')).toEqual(['Минимум 2 спецсимвола'])
   })
 
   it('заглавная «Ё» считается заглавной буквой', () => {
-    expect(validatePassword('Ёе123!!')).toBe('')
+    expect(validatePassword('Ёе123!!')).toEqual([])
   })
 })
 
 describe('валидация на входе', () => {
   it('требует только непустые поля', () => {
     expect(validateSignInEmail('')).toBe('Введите почту')
-    expect(validateSignInPassword('')).toBe('Введите пароль')
+    expect(validateSignInPassword('')).toEqual(['Введите пароль'])
   })
 
   it('не применяет правила сложности пароля', () => {
-    expect(validateSignInPassword('abc')).toBe('')
+    expect(validateSignInPassword('abc')).toEqual([])
   })
 })
