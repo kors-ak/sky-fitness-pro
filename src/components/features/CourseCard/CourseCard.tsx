@@ -1,5 +1,6 @@
 'use client'
 
+import DeleteCourseModal from '@/components/popups/DeleteCourseModal/DeleteCourseModal'
 import { useCourseProgress } from '@/hooks/useCourseProgress'
 import { useCourses } from '@/hooks/useCourses'
 import { useProgress } from '@/hooks/useProgress'
@@ -26,13 +27,14 @@ export default function CourseCard({
   const userCourses = useAppSelector((store) => store.courses.userCourses)
   const isAdded = userCourses.some((el) => el._id === course._id)
 
-  const { addCourse, removeCourse } = useCourses()
+  const { addCourse } = useCourses()
   const { progress, isLoading: isProgressLoading } = useCourseProgress(
     course._id
   )
   const { removeCourseProgress } = useProgress()
 
   const [isSelectWorkoutOpen, setIsSelectWorkoutOpen] = useState<boolean>(false)
+  const [isDeleteCourseOpen, setIsDeleteCourseOpen] = useState<boolean>(false)
 
   const handleProgressBtnAction = () => {
     if (progress === 100) {
@@ -46,7 +48,7 @@ export default function CourseCard({
     event.stopPropagation()
 
     if (isAdded) {
-      removeCourse(course._id)
+      setIsDeleteCourseOpen(true)
     } else {
       addCourse(course._id)
     }
@@ -180,6 +182,14 @@ export default function CourseCard({
         onSelectCourse={() => setIsSelectWorkoutOpen(false)}
         onSelectWorkout={handleSelectWorkout}
       />
+
+      {isDeleteCourseOpen && (
+        <DeleteCourseModal
+          id={course._id}
+          name={course.nameRU}
+          changeIsOpen={setIsDeleteCourseOpen}
+        />
+      )}
     </>
   )
 }
