@@ -78,6 +78,10 @@
   }
 }
 
+.errors {
+  list-style-type: none;
+}
+
 .error {
   font-weight: 400;
   font-size: 14px;

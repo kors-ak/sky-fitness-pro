@@ -52,6 +52,7 @@ export default function SignUpPage() {
         event.preventDefault()
         handleSubmit()
       }}
+      noValidate
     >
       <h1 className={styles.visuallyHidden}>Регистрация</h1>
 
@@ -81,7 +82,7 @@ export default function SignUpPage() {
         </label>
         <input
           className={cn(styles.input, {
-            [styles.inputError]: Boolean(errors.password),
+            [styles.inputError]: errors.password.length > 0,
           })}
           type="password"
           name="password"
@@ -91,7 +92,15 @@ export default function SignUpPage() {
           onChange={handlePasswordChange}
           required
         />
-        {errors.password && <p className={styles.error}>{errors.password}</p>}
+        {errors.password.length > 0 && (
+          <ul className={styles.errors}>
+            {errors.password.map((el, i) => (
+              <li key={i}>
+                <p className={styles.error}>{el}</p>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <label className={styles.visuallyHidden} htmlFor="confirmPassword">
           Повторите пароль

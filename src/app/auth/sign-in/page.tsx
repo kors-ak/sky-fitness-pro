@@ -56,6 +56,7 @@ export default function SignInPage() {
         event.preventDefault()
         handleSubmit()
       }}
+      noValidate
     >
       <h1 className={styles.visuallyHidden}>Вход</h1>
 
@@ -86,7 +87,7 @@ export default function SignInPage() {
         <input
           className={cn(styles.input, {
             [styles.inputError]: Boolean(
-              errors.password || apiError.includes('Пароль')
+              errors.password.length > 0 || apiError.includes('Пароль')
             ),
           })}
           type="password"
@@ -97,7 +98,15 @@ export default function SignInPage() {
           onChange={handlePasswordChange}
           required
         />
-        {errors.password && <p className={styles.error}>{errors.password}</p>}
+        {errors.password.length > 0 && (
+          <ul>
+            {errors.password.map((el, i) => (
+              <li key={i}>
+                <p className={styles.error}>{el}</p>
+              </li>
+            ))}
+          </ul>
+        )}
 
         {apiError && <p className={styles.error}>{apiError}</p>}
       </div>
